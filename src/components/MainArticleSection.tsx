@@ -38,7 +38,7 @@ const MainArticleSection = () => {
         to={`/article/${mainArticle.slug}`}
         className="group block"
       >
-        <article className="relative overflow-hidden rounded-lg border bg-card shadow-lg transition-all hover:shadow-xl">
+        <article className="relative overflow-hidden rounded-lg border-2 border-primary bg-primary/5 shadow-lg transition-all hover:shadow-xl hover:border-primary/80">
           <div className="grid gap-0 lg:grid-cols-2">
             {/* Image Section */}
             <div className="relative aspect-[16/9] lg:aspect-auto overflow-hidden">
