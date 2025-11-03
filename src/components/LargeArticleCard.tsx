@@ -29,7 +29,7 @@ const LargeArticleCard = ({
     : "";
 
   return (
-    <Link to={`/article/${slug}`} className="group block">
+    <Link to={`/news/${slug}`} className="group block">
       <article className="overflow-hidden rounded-lg bg-card transition-shadow hover:shadow-lg">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {coverUrl ? (

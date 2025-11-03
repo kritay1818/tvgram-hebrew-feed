@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const HeroSection = () => {
   const { data: featuredArticle, isLoading } = useQuery({
-    queryKey: ["featured-article"],
+    queryKey: ["hero-article"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("articles")
@@ -17,7 +17,7 @@ const HeroSection = () => {
           videos (is_live)
         `)
         .eq("is_published", true)
-        .eq("is_featured", true)
+        .eq("is_top_story", true)
         .order("published_at", { ascending: false })
         .limit(1)
         .single();
@@ -50,7 +50,7 @@ const HeroSection = () => {
 
   return (
     <section className="mb-8">
-      <Link to={`/article/${featuredArticle.slug}`} className="group">
+      <Link to={`/news/${featuredArticle.slug}`} className="group">
         <div className="grid gap-6 overflow-hidden rounded-lg bg-card lg:grid-cols-2">
           {/* Image */}
           <div className="relative aspect-video overflow-hidden bg-muted lg:order-2">
