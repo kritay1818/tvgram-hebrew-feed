@@ -25,9 +25,11 @@ const Index = () => {
   });
   return <div className="min-h-screen bg-background">
       <Header />
-      <VideoSidebar />
+      <div className="hidden md:block">
+        <VideoSidebar />
+      </div>
       
-      <main className="container max-w-7xl py-8 pl-64 pr-4">
+      <main className="container max-w-7xl py-8 md:pl-64 pr-4">
         {/* Hero Featured Article */}
         <HeroSection />
         
