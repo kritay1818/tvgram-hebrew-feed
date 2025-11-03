@@ -29,7 +29,7 @@ const Index = () => {
         <VideoSidebar />
       </div>
       
-      <main className="w-full py-8 md:pl-64 px-8 md:pr-8 lg:pr-16">
+      <main className="w-full py-8 md:pl-56 px-4 md:px-6">
         {/* Hero Featured Article */}
         <HeroSection />
         
