@@ -1,65 +1,48 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
-import LiveSection from "@/components/LiveSection";
-import CategorySection from "@/components/CategorySection";
-import BannerAd from "@/components/BannerAd";
+import HeroSection from "@/components/HeroSection";
+import CategorySectionGrid from "@/components/CategorySectionGrid";
+import AdBanner from "@/components/AdBanner";
 
 const Index = () => {
+  // Fetch all categories in navigation order
+  const { data: categories } = useQuery({
+    queryKey: ["nav-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .eq("is_in_nav", true)
+        .order("order_index", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container max-w-4xl py-6">
-        {/* Main LIVE Section */}
-        <LiveSection />
+      <main className="container max-w-7xl py-6">
+        {/* Hero Featured Article */}
+        <HeroSection />
         
-        {/* סלבס Section */}
-        <CategorySection 
-          categorySlug="celebs" 
-          categoryName="סלבס" 
-          limit={4}
-        />
+        {/* Ad after hero */}
+        <AdBanner size="leaderboard" />
         
-        {/* VOD Section */}
-        <CategorySection 
-          categorySlug="vod" 
-          categoryName="VOD" 
-          limit={4}
-        />
-        
-        {/* Banner Ad */}
-        <BannerAd />
-        
-        {/* פלילי Section */}
-        <CategorySection 
-          categorySlug="crime" 
-          categoryName="פלילי" 
-          limit={4}
-        />
-        
-        {/* Additional VOD Sections */}
-        <CategorySection 
-          categorySlug="politics" 
-          categoryName="פוליטיקה" 
-          limit={4}
-        />
-        
-        <CategorySection 
-          categorySlug="news" 
-          categoryName="חדשות" 
-          limit={4}
-        />
-        
-        <CategorySection 
-          categorySlug="sport" 
-          categoryName="ספורט" 
-          limit={4}
-        />
-        
-        {/* Another Banner Ad */}
-        <BannerAd />
-        
-        {/* Bottom LIVE Section */}
-        <LiveSection />
+        {/* Dynamic category sections */}
+        {categories?.map((category, index) => (
+          <div key={category.id}>
+            <CategorySectionGrid
+              categorySlug={category.slug}
+              limit={7}
+            />
+            {/* Ad between every 2 sections */}
+            {index % 2 === 1 && <AdBanner size="leaderboard" />}
+          </div>
+        ))}
       </main>
       
       <footer className="border-t bg-card py-6">
