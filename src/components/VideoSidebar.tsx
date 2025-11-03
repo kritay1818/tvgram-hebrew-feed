@@ -90,7 +90,7 @@ const VideoSidebar = () => {
             <h2 className="text-sm font-bold">מבזקים</h2>
           </div>
           
-          <div className="space-y-2 p-3 max-h-[300px] overflow-y-auto">
+          <div className="space-y-2 p-3 max-h-[180px] overflow-y-auto">
             {breakingNews.map((article) => (
               <Link
                 key={article.id}
