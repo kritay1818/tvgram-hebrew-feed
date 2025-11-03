@@ -38,8 +38,10 @@ const MainArticleSection = () => {
         to={`/article/${mainArticle.slug}`}
         className="group block"
       >
-        <article className="relative overflow-hidden rounded-lg border-2 border-primary bg-primary/5 shadow-lg transition-all hover:shadow-xl hover:border-primary/80">
-          <div className="grid gap-0 lg:grid-cols-2">
+        <article className="relative overflow-hidden rounded-lg shadow-xl transition-all hover:shadow-2xl" style={{
+          background: 'linear-gradient(135deg, #0066cc 0%, #0099ff 100%)'
+        }}>
+          <div className="grid gap-0 lg:grid-cols-[45%_55%]">
             {/* Image Section */}
             <div className="relative aspect-[16/9] lg:aspect-auto overflow-hidden">
               <img
@@ -48,35 +50,35 @@ const MainArticleSection = () => {
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               {isLive && (
-                <div className="absolute top-4 right-4 flex items-center gap-1.5 rounded bg-news-live px-3 py-1 text-xs font-bold text-white">
+                <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-sm font-bold text-white">
                   <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-white"></span>
                   LIVE
                 </div>
               )}
             </div>
 
-            {/* Content Section */}
-            <div className="flex flex-col justify-center p-8 lg:p-12">
+            {/* Content Section - White text on blue gradient */}
+            <div className="flex flex-col justify-center p-8 lg:p-12 text-white">
               {categoryName && (
                 <Badge 
-                  variant="secondary" 
-                  className="mb-4 w-fit text-xs font-semibold"
+                  variant="outline" 
+                  className="mb-4 w-fit text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
                 >
                   {categoryName}
                 </Badge>
               )}
               
-              <h2 className="mb-4 text-3xl font-bold leading-tight text-foreground lg:text-4xl">
+              <h2 className="mb-4 text-3xl font-bold leading-tight text-white lg:text-4xl drop-shadow-sm">
                 {mainArticle.title}
               </h2>
               
               {mainArticle.summary && (
-                <p className="mb-6 text-lg text-muted-foreground line-clamp-3">
+                <p className="mb-6 text-lg text-white/90 line-clamp-3">
                   {mainArticle.summary}
                 </p>
               )}
 
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-4 text-sm text-white/80">
                 {mainArticle.author && (
                   <span className="font-medium">{mainArticle.author}</span>
                 )}
