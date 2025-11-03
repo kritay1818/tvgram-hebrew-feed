@@ -8,6 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
+import MobileSwipeView from "@/components/MobileSwipeView";
 const Index = () => {
   // Fetch all categories in navigation order
   const {
@@ -31,7 +32,13 @@ const Index = () => {
         <VideoSidebar />
       </div>
       
-      <main className="w-full py-8 md:pl-56 px-4 md:px-6">
+      {/* Mobile Swipe View */}
+      <div className="md:hidden">
+        <MobileSwipeView />
+      </div>
+      
+      {/* Desktop View */}
+      <main className="hidden md:block w-full py-8 md:pl-56 px-4 md:px-6">
         {/* Hero Featured Article */}
         <HeroSection />
         
