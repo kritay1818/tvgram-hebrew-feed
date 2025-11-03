@@ -100,7 +100,7 @@ const Header = () => {
         
         {/* Center - Logo */}
         <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-          <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
+          <img src={logo} alt="TVGRAM LIVE" className="h-12 md:h-16 lg:h-20 w-auto" />
         </Link>
         
         {/* Right side - nav items + LIVE button + Theme toggle */}
