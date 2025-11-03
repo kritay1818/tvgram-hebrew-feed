@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import ArticleCard from "./ArticleCard";
-import { Link } from "react-router-dom";
+import ArticleRow from "./ArticleRow";
 
 interface CategorySectionProps {
   categorySlug: string;
@@ -9,7 +8,7 @@ interface CategorySectionProps {
   limit?: number;
 }
 
-const CategorySection = ({ categorySlug, categoryName, limit = 3 }: CategorySectionProps) => {
+const CategorySection = ({ categorySlug, categoryName, limit = 4 }: CategorySectionProps) => {
   const { data: articles, isLoading } = useQuery({
     queryKey: ["category-articles", categorySlug],
     queryFn: async () => {
@@ -23,10 +22,7 @@ const CategorySection = ({ categorySlug, categoryName, limit = 3 }: CategorySect
 
       const { data, error } = await supabase
         .from("articles")
-        .select(`
-          *,
-          primary_category:categories!articles_primary_category_id_fkey(name, slug)
-        `)
+        .select("*")
         .eq("primary_category_id", category.id)
         .eq("is_published", true)
         .order("published_at", { ascending: false })
@@ -40,27 +36,22 @@ const CategorySection = ({ categorySlug, categoryName, limit = 3 }: CategorySect
   if (isLoading || !articles || articles.length === 0) return null;
 
   return (
-    <section className="mb-8">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-news-category">{categoryName}</h2>
-        <Link 
-          to={`/category/${categorySlug}`}
-          className="text-sm font-medium text-primary hover:underline"
-        >
-          כל הכתבות →
-        </Link>
+    <section className="mb-6">
+      <div className="mb-3 bg-primary px-4 py-2">
+        <h2 className="text-xl font-bold text-primary-foreground">{categoryName}</h2>
       </div>
       
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="space-y-4 bg-card p-4">
         {articles.map((article) => (
-          <ArticleCard
+          <ArticleRow
             key={article.id}
-            id={article.id}
-            title={article.title}
-            summary={article.summary || undefined}
-            coverUrl={article.cover_url || undefined}
-            slug={article.slug}
-            category={article.primary_category?.name}
+            article={{
+              id: article.id,
+              title: article.title,
+              summary: article.summary || undefined,
+              cover_url: article.cover_url || undefined,
+              slug: article.slug,
+            }}
           />
         ))}
       </div>
