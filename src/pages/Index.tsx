@@ -5,6 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
+import VideoSidebar from "@/components/VideoSidebar";
 
 const Index = () => {
   // Fetch all categories in navigation order
@@ -25,8 +26,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <VideoSidebar />
       
-      <main className="container max-w-7xl py-6">
+      <main className="container max-w-7xl py-6 pr-64">
         {/* Hero Featured Article */}
         <HeroSection />
         
