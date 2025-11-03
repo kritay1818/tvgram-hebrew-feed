@@ -27,20 +27,7 @@ const HeroSection = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <section className="mb-8">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Skeleton className="aspect-video w-full" />
-          <div className="space-y-4">
-            <Skeleton className="h-8 w-3/4" />
-            <Skeleton className="h-20 w-full" />
-            <Skeleton className="h-10 w-32" />
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (isLoading) return null;
 
   if (!featuredArticle) return null;
 

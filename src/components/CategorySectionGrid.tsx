@@ -39,18 +39,7 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
     },
   });
 
-  if (isLoading) {
-    return (
-      <section className="mb-8">
-        <Skeleton className="mb-4 h-8 w-48" />
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="aspect-[4/3]" />
-          ))}
-        </div>
-      </section>
-    );
-  }
+  if (isLoading) return null;
 
   if (!data || !data.articles || data.articles.length === 0) return null;
 
