@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
 
@@ -31,6 +32,9 @@ const Index = () => {
         
         {/* Ad after hero */}
         <AdBanner size="leaderboard" />
+        
+        {/* Main Featured Article */}
+        <MainArticleSection />
         
         {/* Dynamic category sections */}
         {categories?.map((category, index) => (
