@@ -43,7 +43,7 @@ const MainArticleSection = () => {
         }}>
           <div className="grid gap-0 lg:grid-cols-[45%_55%]">
             {/* Image Section */}
-            <div className="relative aspect-[16/9] lg:aspect-auto overflow-hidden">
+            <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
               <img
                 src={mainArticle.cover_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"}
                 alt={mainArticle.title}
@@ -58,22 +58,22 @@ const MainArticleSection = () => {
             </div>
 
             {/* Content Section - White text on blue gradient */}
-            <div className="flex flex-col justify-center p-8 lg:p-12 text-white">
+            <div className="flex flex-col justify-center p-4 lg:p-12 text-white">
               {categoryName && (
                 <Badge 
                   variant="outline" 
-                  className="mb-4 w-fit text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
+                  className="mb-2 lg:mb-4 w-fit text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
                 >
                   {categoryName}
                 </Badge>
               )}
               
-              <h2 className="mb-4 text-3xl font-bold leading-tight text-white lg:text-4xl drop-shadow-sm">
+              <h2 className="mb-2 lg:mb-4 text-lg lg:text-3xl xl:text-4xl font-bold leading-tight text-white drop-shadow-sm">
                 {mainArticle.title}
               </h2>
               
               {mainArticle.summary && (
-                <p className="mb-6 text-lg text-white/90 line-clamp-3">
+                <p className="mb-3 lg:mb-6 text-sm lg:text-lg text-white/90 line-clamp-2 lg:line-clamp-3">
                   {mainArticle.summary}
                 </p>
               )}
