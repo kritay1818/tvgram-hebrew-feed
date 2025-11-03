@@ -157,6 +157,7 @@ export type Database = {
       }
       videos: {
         Row: {
+          category: string | null
           created_at: string | null
           description: string | null
           duration_seconds: number | null
@@ -176,6 +177,7 @@ export type Database = {
           viewer_count: number | null
         }
         Insert: {
+          category?: string | null
           created_at?: string | null
           description?: string | null
           duration_seconds?: number | null
@@ -195,6 +197,7 @@ export type Database = {
           viewer_count?: number | null
         }
         Update: {
+          category?: string | null
           created_at?: string | null
           description?: string | null
           duration_seconds?: number | null

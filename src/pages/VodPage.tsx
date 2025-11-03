@@ -2,16 +2,33 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const VodPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  const categories = [
+    { value: "מצחיק", label: "מצחיק" },
+    { value: "אקטואלי", label: "אקטואלי" },
+    { value: "דרמתי", label: "דרמתי" },
+    { value: "חדשות", label: "חדשות" },
+    { value: "ספורט", label: "ספורט" },
+  ];
+
   const { data: videos, isLoading } = useQuery({
-    queryKey: ["vod-videos"],
+    queryKey: ["vod-videos", selectedCategory],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("videos")
         .select("*")
-        .eq("is_live", false)
-        .order("created_at", { ascending: false });
+        .eq("is_live", false);
+      
+      if (selectedCategory) {
+        query = query.eq("category", selectedCategory);
+      }
+      
+      const { data, error } = await query.order("created_at", { ascending: false });
       
       if (error) throw error;
       return data;
@@ -26,6 +43,27 @@ const VodPage = () => {
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-news-category">VOD</h1>
           <p className="mt-2 text-muted-foreground">סרטונים מוקלטים</p>
+        </div>
+        
+        {/* Category Filters */}
+        <div className="mb-6 flex flex-wrap gap-2">
+          <Button
+            variant={selectedCategory === null ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory(null)}
+          >
+            הכל
+          </Button>
+          {categories.map((category) => (
+            <Button
+              key={category.value}
+              variant={selectedCategory === category.value ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSelectedCategory(category.value)}
+            >
+              {category.label}
+            </Button>
+          ))}
         </div>
         
         {isLoading ? (
