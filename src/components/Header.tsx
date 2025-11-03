@@ -90,7 +90,7 @@ const Header = () => {
 
         {/* Desktop - Navigation Items */}
         <div className="hidden lg:flex items-center gap-3 lg:gap-6">
-          {navItems.slice(0, 4).map((item) => (
+          {navItems.slice(0, 5).map((item) => (
             <NavLink key={item.path} path={item.path} label={item.label} />
           ))}
         </div>
@@ -103,7 +103,7 @@ const Header = () => {
         {/* Right side - nav items + LIVE button */}
         <div className="flex items-center gap-3 lg:gap-6">
           <div className="hidden lg:flex items-center gap-3 lg:gap-6">
-            {navItems.slice(4).map((item) => (
+            {navItems.slice(5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
           </div>
