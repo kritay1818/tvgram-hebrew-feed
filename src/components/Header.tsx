@@ -18,49 +18,56 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-primary">TVGRAM</span>
-        </Link>
-        
-        <nav className="flex gap-4 lg:gap-6">
-          <Link to="/" className="text-sm font-medium transition-colors hover:text-primary">
-            חדשות
-          </Link>
-          <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary">
-            ספורט
-          </Link>
-          <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary">
-            פוליטי
-          </Link>
-          <Link to="/category/celebs" className="text-sm font-medium transition-colors hover:text-primary">
-            סלבס
-          </Link>
-          <Link to="/vod" className="text-sm font-medium transition-colors hover:text-primary">
-            VOD
-          </Link>
-          <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary">
-            פלילי
-          </Link>
-          <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary">
-            ברשת
-          </Link>
-          <Link 
-            to="/category/recommended" 
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            מומלצים
-          </Link>
+      <div className="container flex h-16 items-center justify-between gap-4">
+        {/* Left side - LIVE button + nav items */}
+        <div className="flex items-center gap-3 lg:gap-6">
           {hasLive && (
             <Link 
               to="/live" 
-              className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-accent"
+              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
             >
-              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-news-live"></span>
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
               LIVE
             </Link>
           )}
-        </nav>
+          <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            בטחוני
+          </Link>
+          <Link to="/category/celebs" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            לייף-סטייל
+          </Link>
+          <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            ספורט
+          </Link>
+        </div>
+        
+        {/* Center - Logo */}
+        <Link to="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+          <div className="flex items-center gap-1">
+            <span className="text-xl lg:text-2xl font-bold" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+              <span className="bg-[#1a1a2e] text-white px-2 py-0.5">TV</span>
+              <span className="text-foreground">⊚</span>
+            </span>
+            <span className="text-xl lg:text-2xl font-bold text-foreground">GRAM</span>
+            <span className="text-base lg:text-lg font-bold text-muted-foreground ml-1">NEWS</span>
+          </div>
+        </Link>
+        
+        {/* Right side - nav items */}
+        <div className="flex items-center gap-3 lg:gap-6">
+          <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            פלילי
+          </Link>
+          <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            פוליטי
+          </Link>
+          <Link 
+            to="/" 
+            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
+          >
+            ראשי
+          </Link>
+        </div>
       </div>
     </header>
   );
