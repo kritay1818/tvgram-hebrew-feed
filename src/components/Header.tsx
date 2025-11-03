@@ -30,14 +30,17 @@ const Header = () => {
               LIVE
             </Link>
           )}
-          <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            בטחוני
+          <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            פלילי
           </Link>
-          <Link to="/category/celebs" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            לייף-סטייל
+          <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            פוליטי
           </Link>
-          <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            ספורט
+          <Link 
+            to="/" 
+            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
+          >
+            ראשי
           </Link>
         </div>
         
@@ -55,17 +58,14 @@ const Header = () => {
         
         {/* Right side - nav items */}
         <div className="flex items-center gap-3 lg:gap-6">
-          <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            פלילי
+          <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            ספורט
           </Link>
-          <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            פוליטי
+          <Link to="/category/celebs" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            לייף-סטייל
           </Link>
-          <Link 
-            to="/" 
-            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
-          >
-            ראשי
+          <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+            בטחוני
           </Link>
         </div>
       </div>
