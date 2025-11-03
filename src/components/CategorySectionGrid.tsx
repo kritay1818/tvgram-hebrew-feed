@@ -48,10 +48,12 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
 
   return (
     <section className="mb-12">
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold uppercase tracking-tight">
-          {category.name}
-        </h2>
+      <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="bg-news-live md:bg-transparent px-4 py-2 md:p-0 w-full md:w-auto flex justify-center md:justify-start">
+          <h2 className="text-xl md:text-2xl font-bold uppercase tracking-tight text-white md:text-foreground">
+            {category.name}
+          </h2>
+        </div>
         <Link to={`/category/${category.slug}`}>
           <Button variant="ghost" size="sm" className="text-primary hover:text-primary">
             ראה עוד ←
