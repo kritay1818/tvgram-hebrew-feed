@@ -4,6 +4,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselApi } from "@/componen
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
+import CategoryNav from "@/components/CategoryNav";
+import AdBanner from "@/components/AdBanner";
 
 const MobileSwipeView = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -24,6 +26,20 @@ const MobileSwipeView = () => {
     },
   });
 
+  const { data: categories } = useQuery({
+    queryKey: ["nav-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .eq("is_in_nav", true)
+        .order("order_index", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   useEffect(() => {
     if (!api) return;
 
@@ -36,10 +52,20 @@ const MobileSwipeView = () => {
 
   return (
     <div className="md:hidden fixed inset-0 top-16 bg-background">
+      {/* Category Navigation */}
+      <div className="absolute top-0 left-0 right-0 z-40 bg-background border-b">
+        <CategoryNav categories={categories} />
+      </div>
+
+      {/* Ad Banner */}
+      <div className="absolute top-16 left-0 right-0 z-40">
+        <AdBanner size="leaderboard" className="mx-[5px]" />
+      </div>
+
       <Carousel
         setApi={setApi}
         orientation="vertical"
-        className="h-full w-full"
+        className="h-full w-full pt-32"
         opts={{
           align: "start",
           loop: false,
@@ -48,7 +74,8 @@ const MobileSwipeView = () => {
       >
         <CarouselContent className="h-full">
           {articles.map((article, index) => (
-            <CarouselItem key={article.id} className="h-full pt-0">
+            <>
+              <CarouselItem key={article.id} className="h-full pt-0">
               <div className="relative h-full w-full flex flex-col">
                 {/* Article Image */}
                 <div className="relative h-[45vh] w-full overflow-hidden bg-muted">
@@ -96,6 +123,14 @@ const MobileSwipeView = () => {
                 )}
               </div>
             </CarouselItem>
+            
+            {/* Ad Banner every 3 articles */}
+            {(index + 1) % 3 === 0 && index < articles.length - 1 && (
+              <CarouselItem key={`ad-${index}`} className="h-full pt-0 flex items-center justify-center">
+                <AdBanner size="leaderboard" className="mx-[5px]" />
+              </CarouselItem>
+            )}
+          </>
           ))}
         </CarouselContent>
       </Carousel>
