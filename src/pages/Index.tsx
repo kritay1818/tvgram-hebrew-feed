@@ -6,25 +6,24 @@ import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
-
 const Index = () => {
   // Fetch all categories in navigation order
-  const { data: categories } = useQuery({
+  const {
+    data: categories
+  } = useQuery({
     queryKey: ["nav-categories"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("categories")
-        .select("*")
-        .eq("is_in_nav", true)
-        .order("order_index", { ascending: true });
-      
+      const {
+        data,
+        error
+      } = await supabase.from("categories").select("*").eq("is_in_nav", true).order("order_index", {
+        ascending: true
+      });
       if (error) throw error;
       return data;
-    },
+    }
   });
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <Header />
       <VideoSidebar />
       
@@ -33,22 +32,17 @@ const Index = () => {
         <HeroSection />
         
         {/* Ad after hero */}
-        <AdBanner size="leaderboard" />
+        <AdBanner size="leaderboard" className="mx-[5px] my-[7px] px-0" />
         
         {/* Main Featured Article */}
         <MainArticleSection />
         
         {/* Dynamic category sections */}
-        {categories?.map((category, index) => (
-          <div key={category.id}>
-            <CategorySectionGrid
-              categorySlug={category.slug}
-              limit={7}
-            />
+        {categories?.map((category, index) => <div key={category.id}>
+            <CategorySectionGrid categorySlug={category.slug} limit={7} />
             {/* Ad between every 2 sections */}
             {index % 2 === 1 && <AdBanner size="leaderboard" />}
-          </div>
-        ))}
+          </div>)}
       </main>
       
       <footer className="border-t bg-card py-6">
@@ -63,8 +57,6 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
