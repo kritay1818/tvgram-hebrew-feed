@@ -6,6 +6,7 @@ import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
+import Footer from "@/components/Footer";
 const Index = () => {
   // Fetch all categories in navigation order
   const {
@@ -47,18 +48,7 @@ const Index = () => {
           </div>)}
       </main>
       
-      <footer className="border-t bg-card py-6">
-        <div className="container text-center">
-          <div className="mb-2 flex items-center justify-center gap-2">
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            © 2025 כל הזכויות שמורות
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>;
 };
 export default Index;
