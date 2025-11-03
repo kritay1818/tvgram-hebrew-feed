@@ -110,7 +110,7 @@ const Header = () => {
           {hasLive && (
             <Link 
               to="/live" 
-              className="hidden lg:flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
             >
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
               LIVE

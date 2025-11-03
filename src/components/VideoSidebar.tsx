@@ -41,7 +41,7 @@ const VideoSidebar = () => {
       {/* Live Section */}
       {liveVideo && (
         <div className="flex-shrink-0">
-          <div className="bg-news-live px-3 py-2 flex items-center gap-2">
+          <div className="bg-news-live px-3 py-2 items-center gap-2 hidden md:flex">
             <span className="h-2 w-2 animate-pulse rounded-full bg-white"></span>
             <h2 className="text-sm font-bold">שידור חי</h2>
           </div>
@@ -70,7 +70,7 @@ const VideoSidebar = () => {
 
       {/* VOD Section */}
       <div className="flex-1 min-h-0 flex flex-col">
-        <div className="bg-[#2a3544] px-3 py-2 flex-shrink-0">
+        <div className="bg-[#2a3544] px-3 py-2 flex-shrink-0 hidden md:block">
           <h2 className="text-sm font-bold">צפה עכשיו</h2>
         </div>
         
