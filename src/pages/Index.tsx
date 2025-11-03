@@ -7,6 +7,7 @@ import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
+import CategoryNav from "@/components/CategoryNav";
 const Index = () => {
   // Fetch all categories in navigation order
   const {
@@ -36,6 +37,9 @@ const Index = () => {
         
         {/* Ad after hero */}
         <AdBanner size="leaderboard" className="mx-[5px] mb-6 px-0" />
+        
+        {/* Mobile Category Navigation */}
+        <CategoryNav categories={categories} />
         
         {/* Main Featured Article */}
         <MainArticleSection />
