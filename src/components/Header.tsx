@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 
 const Header = () => {
+  const location = useLocation();
   const { data: hasLive } = useQuery({
     queryKey: ["has-live-videos"],
     queryFn: async () => {
@@ -17,22 +18,42 @@ const Header = () => {
     },
   });
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-4">
         {/* Left side - nav items */}
         <div className="flex items-center gap-3 lg:gap-6">
-          <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            פלילי
-          </Link>
-          <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
-            פוליטי
-          </Link>
           <Link 
             to="/" 
-            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors ${
+              isActive("/") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
           >
             ראשי
+          </Link>
+          <Link 
+            to="/category/crime" 
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
+              isActive("/category/crime") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
+          >
+            פלילי
+          </Link>
+          <Link 
+            to="/category/politics" 
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
+              isActive("/category/politics") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
+          >
+            פוליטי
           </Link>
         </div>
         
@@ -43,13 +64,34 @@ const Header = () => {
         
         {/* Right side - nav items + LIVE button */}
         <div className="flex items-center gap-3 lg:gap-6">
-          <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+          <Link 
+            to="/category/sport" 
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
+              isActive("/category/sport") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
+          >
             ספורט
           </Link>
-          <Link to="/category/celebs" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+          <Link 
+            to="/category/celebs" 
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
+              isActive("/category/celebs") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
+          >
             לייף-סטייל
           </Link>
-          <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
+          <Link 
+            to="/category/online" 
+            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
+              isActive("/category/online") 
+                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+                : "hover:text-primary"
+            }`}
+          >
             בטחוני
           </Link>
           {hasLive && (
