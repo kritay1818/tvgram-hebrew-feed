@@ -75,12 +75,12 @@ const VideoSidebar = () => {
         </div>
         
         <ScrollArea className="flex-1">
-          <div className="space-y-2 p-2">
+          <div className="space-y-3 p-3">
             {vodVideos?.map((video) => (
               <Link
                 key={video.id}
                 to="/vod"
-                className="group flex gap-2 rounded hover:bg-white/5 transition-colors"
+                className="group flex gap-3 rounded p-2 hover:bg-white/5 transition-colors"
               >
                 <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded bg-black">
                   {video.thumb_url ? (
