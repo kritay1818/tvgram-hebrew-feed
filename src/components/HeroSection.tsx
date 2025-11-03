@@ -51,62 +51,63 @@ const HeroSection = () => {
   return (
     <section className="mb-8">
       <Link to={`/news/${featuredArticle.slug}`} className="group">
-        <div className="grid gap-0 overflow-hidden rounded-lg border-2 border-primary/30 bg-card shadow-xl shadow-primary/10 lg:grid-cols-2">
+        <div className="grid gap-6 overflow-hidden rounded-lg bg-card lg:grid-cols-2">
           {/* Image */}
           <div className="relative aspect-video overflow-hidden bg-muted lg:order-2">
             {featuredArticle.cover_url ? (
               <img
                 src={featuredArticle.cover_url}
                 alt={featuredArticle.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="eager"
               />
             ) : (
-              <div className="flex h-full items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
-                <span className="text-6xl font-bold text-primary/30">TVGRAM</span>
+              <div className="flex h-full items-center justify-center">
+                <span className="text-6xl font-bold text-muted-foreground/20">TVGRAM</span>
               </div>
             )}
             {featuredArticle.videos?.is_live && (
-              <div className="absolute top-4 left-4 flex items-center gap-2 bg-news-live px-4 py-2 text-sm font-bold text-white shadow-lg">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-white"></span>
+              <div className="absolute top-4 left-4 bg-news-live px-3 py-1 text-sm font-bold text-white">
                 LIVE
               </div>
             )}
           </div>
 
           {/* Content */}
-          <div className="flex flex-col justify-center bg-gradient-to-br from-card to-secondary/20 p-8 lg:order-1 lg:p-10">
+          <div className="flex flex-col justify-center p-6 lg:order-1 lg:p-8">
             {featuredArticle.categories && (
               <div className="mb-3">
-                <span className="inline-block rounded-full bg-primary px-4 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                <span className="text-sm font-semibold uppercase tracking-wide text-primary">
                   {featuredArticle.categories.name}
                 </span>
               </div>
             )}
             
-            <h1 className="mb-4 line-clamp-3 text-3xl font-black leading-tight text-white transition-colors group-hover:text-primary lg:text-5xl">
+            <h1 className="mb-4 line-clamp-2 text-3xl font-bold leading-tight transition-colors group-hover:text-primary lg:text-4xl">
               {featuredArticle.title}
             </h1>
             
             {featuredArticle.summary && (
-              <p className="mb-6 line-clamp-3 text-lg leading-relaxed text-foreground/80">
+              <p className="mb-4 line-clamp-3 text-lg text-muted-foreground">
                 {featuredArticle.summary}
               </p>
             )}
             
-            <div className="flex items-center gap-4 text-sm text-foreground/60">
-              {timeAgo && <span>{timeAgo}</span>}
+            <div className="flex items-center gap-4">
+              {timeAgo && (
+                <span className="text-sm text-muted-foreground">{timeAgo}</span>
+              )}
               {featuredArticle.author && (
                 <>
-                  <span>·</span>
-                  <span>{featuredArticle.author}</span>
+                  <span className="text-sm text-muted-foreground">·</span>
+                  <span className="text-sm text-muted-foreground">{featuredArticle.author}</span>
                 </>
               )}
             </div>
             
             <div className="mt-6">
-              <span className="inline-flex items-center rounded-full bg-primary px-6 py-2 font-bold text-white transition-all group-hover:bg-primary/80 group-hover:shadow-lg">
-                קרא עוד ←
+              <span className="inline-flex items-center font-semibold text-primary group-hover:underline">
+                לכתבה המלאה ←
               </span>
             </div>
           </div>

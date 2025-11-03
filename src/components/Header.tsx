@@ -21,7 +21,7 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-card/95 shadow-lg shadow-primary/5 backdrop-blur supports-[backdrop-filter]:bg-card/90">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-4">
         {/* Left side - nav items */}
         <div className="flex items-center gap-3 lg:gap-6">
