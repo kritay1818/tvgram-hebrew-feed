@@ -34,17 +34,17 @@ const LivePage = () => {
         </div>
         
         {isLoading ? (
-          <div className="grid gap-6 md:grid-cols-2">
-            {[...Array(4)].map((_, i) => (
+          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {[...Array(8)].map((_, i) => (
               <div key={i} className="animate-pulse">
                 <div className="aspect-video bg-muted"></div>
-                <div className="mt-4 h-6 bg-muted"></div>
-                <div className="mt-2 h-4 w-2/3 bg-muted"></div>
+                <div className="mt-2 h-4 bg-muted"></div>
+                <div className="mt-1 h-3 w-2/3 bg-muted"></div>
               </div>
             ))}
           </div>
         ) : videos && videos.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
             {videos.map((video) => (
               <Card key={video.id} className="overflow-hidden">
                 <div className="relative aspect-video bg-black">
@@ -57,22 +57,22 @@ const LivePage = () => {
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center">
-                      <span className="text-6xl font-bold text-white/20">TVGRAM</span>
+                      <span className="text-4xl font-bold text-white/20">TVGRAM</span>
                     </div>
                   )}
                   {video.is_live && (
-                    <div className="absolute top-2 right-2 bg-news-live px-3 py-1 text-xs font-bold text-white">
+                    <div className="absolute top-2 right-2 bg-news-live px-2 py-0.5 text-[10px] font-bold text-white">
                       LIVE
                     </div>
                   )}
                 </div>
-                <CardContent className="p-4">
-                  <h3 className="mb-2 text-xl font-bold">{video.title}</h3>
+                <CardContent className="p-3">
+                  <h3 className="mb-1 text-sm font-bold line-clamp-2">{video.title}</h3>
                   {video.description && (
-                    <p className="text-muted-foreground">{video.description}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-2">{video.description}</p>
                   )}
                   {video.viewer_count && (
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {video.viewer_count.toLocaleString()} צופים
                     </p>
                   )}
