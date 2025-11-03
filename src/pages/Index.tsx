@@ -25,7 +25,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container max-w-7xl py-6">
+      <main className="container max-w-7xl py-8 px-4">
         {/* Hero Featured Article */}
         <HeroSection />
         
@@ -45,14 +45,14 @@ const Index = () => {
         ))}
       </main>
       
-      <footer className="border-t bg-card py-6">
+      <footer className="border-t border-primary/20 bg-card py-8 shadow-inner">
         <div className="container text-center">
-          <div className="mb-2 flex items-center justify-center gap-2">
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
-            <span className="text-xl font-bold text-primary">TVGRAM</span>
+          <div className="mb-3 flex items-center justify-center gap-3">
+            <span className="text-2xl font-black text-primary">TVGRAM</span>
+            <span className="text-xl text-primary/50">×</span>
+            <span className="text-xl font-bold text-white">NEWS</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-foreground/60">
             © 2025 כל הזכויות שמורות
           </p>
         </div>
