@@ -2,9 +2,18 @@ import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
+import { Menu } from "lucide-react";
+import { useState } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Header = () => {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  
   const { data: hasLive } = useQuery({
     queryKey: ["has-live-videos"],
     queryFn: async () => {
@@ -20,41 +29,70 @@ const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const navItems = [
+    { path: "/", label: "ראשי" },
+    { path: "/category/politics", label: "פוליטי" },
+    { path: "/category/celebs", label: "סלבס" },
+    { path: "/category/sport", label: "ספורט" },
+    { path: "/category/crime", label: "פלילי" },
+    { path: "/category/online", label: "חדשות ברשת" },
+    { path: "/category/recommended", label: "מומלצים" },
+    { path: "/vod", label: "VOD" },
+  ];
+
+  const NavLink = ({ path, label, onClick }: { path: string; label: string; onClick?: () => void }) => (
+    <Link 
+      to={path}
+      onClick={onClick}
+      className={`rounded px-4 py-1.5 text-sm font-medium transition-colors ${
+        isActive(path) 
+          ? "bg-[#1a1a2e] text-white hover:opacity-90" 
+          : "hover:text-primary"
+      }`}
+    >
+      {label}
+    </Link>
+  );
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-4">
-        {/* Left side - nav items */}
-        <div className="flex items-center gap-3 lg:gap-6">
-          <Link 
-            to="/" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors ${
-              isActive("/") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            ראשי
-          </Link>
-          <Link 
-            to="/category/crime" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
-              isActive("/category/crime") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            פלילי
-          </Link>
-          <Link 
-            to="/category/politics" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
-              isActive("/category/politics") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            פוליטי
-          </Link>
+        {/* Mobile - Hamburger Menu */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild className="lg:hidden">
+            <button className="p-2 hover:bg-accent rounded-md">
+              <Menu className="h-6 w-6" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[280px]">
+            <nav className="flex flex-col gap-4 mt-8">
+              {navItems.map((item) => (
+                <NavLink 
+                  key={item.path} 
+                  path={item.path} 
+                  label={item.label}
+                  onClick={() => setIsOpen(false)}
+                />
+              ))}
+              {hasLive && (
+                <Link 
+                  to="/live"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 w-fit"
+                >
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+                  LIVE
+                </Link>
+              )}
+            </nav>
+          </SheetContent>
+        </Sheet>
+
+        {/* Desktop - Navigation Items */}
+        <div className="hidden lg:flex items-center gap-3 lg:gap-6">
+          {navItems.slice(0, 4).map((item) => (
+            <NavLink key={item.path} path={item.path} label={item.label} />
+          ))}
         </div>
         
         {/* Center - Logo */}
@@ -64,40 +102,15 @@ const Header = () => {
         
         {/* Right side - nav items + LIVE button */}
         <div className="flex items-center gap-3 lg:gap-6">
-          <Link 
-            to="/category/sport" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
-              isActive("/category/sport") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            ספורט
-          </Link>
-          <Link 
-            to="/category/celebs" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
-              isActive("/category/celebs") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            לייף-סטייל
-          </Link>
-          <Link 
-            to="/category/online" 
-            className={`rounded px-4 py-1.5 text-sm font-medium transition-colors hidden lg:block ${
-              isActive("/category/online") 
-                ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-                : "hover:text-primary"
-            }`}
-          >
-            בטחוני
-          </Link>
+          <div className="hidden lg:flex items-center gap-3 lg:gap-6">
+            {navItems.slice(4).map((item) => (
+              <NavLink key={item.path} path={item.path} label={item.label} />
+            ))}
+          </div>
           {hasLive && (
             <Link 
               to="/live" 
-              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+              className="hidden lg:flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
             >
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
               LIVE
