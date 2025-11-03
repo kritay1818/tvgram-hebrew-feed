@@ -58,27 +58,27 @@ const MainArticleSection = () => {
             </div>
 
             {/* Content Section - White text on blue gradient */}
-            <div className="flex flex-col justify-center p-4 lg:p-12 text-white">
+            <div className="flex flex-col justify-center p-3 lg:p-12 text-white">
               {categoryName && (
                 <Badge 
                   variant="outline" 
-                  className="mb-2 lg:mb-4 w-fit text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
+                  className="mb-1.5 lg:mb-4 w-fit text-[10px] lg:text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
                 >
                   {categoryName}
                 </Badge>
               )}
               
-              <h2 className="mb-2 lg:mb-4 text-lg lg:text-3xl xl:text-4xl font-bold leading-tight text-white drop-shadow-sm">
+              <h2 className="mb-1.5 lg:mb-4 text-base lg:text-3xl xl:text-4xl font-bold leading-tight text-white drop-shadow-sm">
                 {mainArticle.title}
               </h2>
               
               {mainArticle.summary && (
-                <p className="mb-3 lg:mb-6 text-sm lg:text-lg text-white/90 line-clamp-2 lg:line-clamp-3">
+                <p className="mb-2 lg:mb-6 text-xs lg:text-lg text-white/90 line-clamp-2 lg:line-clamp-3">
                   {mainArticle.summary}
                 </p>
               )}
 
-              <div className="flex items-center gap-4 text-sm text-white/80">
+              <div className="flex items-center gap-2 lg:gap-4 text-xs lg:text-sm text-white/80">
                 {mainArticle.author && (
                   <span className="font-medium">{mainArticle.author}</span>
                 )}
