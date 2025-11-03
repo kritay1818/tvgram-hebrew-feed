@@ -39,7 +39,7 @@ const MainArticleSection = () => {
         className="group block"
       >
         <article className="relative overflow-hidden rounded-lg shadow-xl transition-all hover:shadow-2xl" style={{
-          background: 'linear-gradient(135deg, #0066cc 0%, #0099ff 100%)'
+          background: 'linear-gradient(135deg, #00a3e0 0%, #00d4ff 100%)'
         }}>
           <div className="grid gap-0 lg:grid-cols-[45%_55%]">
             {/* Image Section */}
