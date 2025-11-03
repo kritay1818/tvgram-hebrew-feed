@@ -30,16 +30,28 @@ const Header = () => {
     },
   });
 
+  const { data: categories } = useQuery({
+    queryKey: ["nav-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("id, name, slug")
+        .eq("is_in_nav", true)
+        .order("order_index", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
     { path: "/", label: "ראשי" },
-    { path: "/category/politics", label: "פוליטי" },
-    { path: "/category/celebs", label: "סלבס" },
-    { path: "/category/sport", label: "ספורט" },
-    { path: "/category/crime", label: "פלילי" },
-    { path: "/category/online", label: "חדשות ברשת" },
-    { path: "/category/recommended", label: "מומלצים" },
+    ...(categories?.map(cat => ({
+      path: `/category/${cat.slug}`,
+      label: cat.name
+    })) || []),
     { path: "/vod", label: "VOD" },
   ];
 
