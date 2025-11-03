@@ -54,7 +54,7 @@ const CategoryPage = () => {
       <main className="container py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-news-category">
-            חדשות ברשת
+            {category?.name || slug}
           </h1>
           {category?.description && (
             <p className="mt-2 text-muted-foreground">
