@@ -34,7 +34,7 @@ const Index = () => {
         <HeroSection />
         
         {/* Ad after hero */}
-        <AdBanner size="leaderboard" className="mx-[5px] my-8 px-0" />
+        <AdBanner size="leaderboard" className="mx-[5px] mb-6 px-0" />
         
         {/* Main Featured Article */}
         <MainArticleSection />
