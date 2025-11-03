@@ -91,7 +91,7 @@ const ArticlePage = () => {
               <img
                 src={article.cover_url}
                 alt={article.title}
-                className="h-auto w-full"
+                className="h-auto w-full max-h-[500px] object-cover"
               />
             </div>
           )}
