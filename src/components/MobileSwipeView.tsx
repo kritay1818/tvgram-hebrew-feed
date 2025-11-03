@@ -50,7 +50,7 @@ const MobileSwipeView = () => {
   if (!articles || articles.length === 0) return null;
 
   return (
-    <div className="md:hidden fixed inset-0 top-16 bg-background">
+    <div className="md:hidden fixed inset-0 top-16 bg-background overflow-hidden">
       {/* Category Navigation */}
       <div className="absolute top-0 left-0 right-0 z-40 bg-background border-b">
         <CategoryNav categories={categories} />
@@ -64,19 +64,20 @@ const MobileSwipeView = () => {
       <Carousel
         setApi={setApi}
         orientation="vertical"
-        className="h-full w-full pt-36 touch-pan-y"
+        className="h-full w-full pt-36"
         opts={{
           align: "start",
           loop: false,
           skipSnaps: false,
           watchDrag: true,
+          dragThreshold: 10,
         }}
       >
-        <CarouselContent className="h-full touch-pan-y">
+        <CarouselContent className="h-full -mt-4">
           {articles.map((article, index) => (
             <>
-              <CarouselItem key={article.id} className="h-full pt-0 touch-pan-y">
-              <div className="relative h-full w-full flex flex-col touch-pan-y">
+              <CarouselItem key={article.id} className="pt-0 basis-full min-h-full">
+              <div className="relative h-full w-full flex flex-col select-none">
                 {/* Article Image */}
                 <div className="relative h-[45vh] w-full overflow-hidden bg-muted">
                   {article.cover_url ? (
