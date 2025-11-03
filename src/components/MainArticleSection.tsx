@@ -33,8 +33,8 @@ const MainArticleSection = () => {
   const categorySlug = mainArticle.categories?.slug;
 
   return (
-    <section className="mb-8">
-      <Link 
+    <section className="mb-10">
+      <Link
         to={`/article/${mainArticle.slug}`}
         className="group block"
       >

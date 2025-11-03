@@ -49,7 +49,7 @@ const HeroSection = () => {
     : "";
 
   return (
-    <section className="mb-8">
+    <section className="mb-10">
       <Link to={`/news/${featuredArticle.slug}`} className="group">
         <div className="grid gap-6 overflow-hidden rounded-lg bg-card lg:grid-cols-2">
           {/* Image */}

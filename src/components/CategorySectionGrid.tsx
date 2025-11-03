@@ -58,8 +58,8 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
   const [firstArticle, ...restArticles] = articles;
 
   return (
-    <section className="mb-8">
-      <div className="mb-4 flex items-center justify-between">
+    <section className="mb-12">
+      <div className="mb-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold uppercase tracking-tight">
           {category.name}
         </h2>

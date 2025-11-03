@@ -27,12 +27,12 @@ const Index = () => {
       <Header />
       <VideoSidebar />
       
-      <main className="container max-w-7xl py-6 pl-64">
+      <main className="container max-w-7xl py-8 pl-64 pr-4">
         {/* Hero Featured Article */}
         <HeroSection />
         
         {/* Ad after hero */}
-        <AdBanner size="leaderboard" className="mx-[5px] my-[7px] px-0" />
+        <AdBanner size="leaderboard" className="mx-[5px] my-8 px-0" />
         
         {/* Main Featured Article */}
         <MainArticleSection />
@@ -41,7 +41,7 @@ const Index = () => {
         {categories?.map((category, index) => <div key={category.id}>
             <CategorySectionGrid categorySlug={category.slug} limit={7} />
             {/* Ad between every 2 sections */}
-            {index % 2 === 1 && <AdBanner size="leaderboard" />}
+            {index % 2 === 1 && <AdBanner size="leaderboard" className="my-8" />}
           </div>)}
       </main>
       
