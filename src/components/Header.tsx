@@ -2,17 +2,20 @@ import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
-import { Menu } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
   
   const { data: hasLive } = useQuery({
     queryKey: ["has-live-videos"],
@@ -100,7 +103,7 @@ const Header = () => {
           <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
         </Link>
         
-        {/* Right side - nav items + LIVE button */}
+        {/* Right side - nav items + LIVE button + Theme toggle */}
         <div className="flex items-center gap-3 lg:gap-6">
           <div className="hidden lg:flex items-center gap-3 lg:gap-6">
             {navItems.slice(5).map((item) => (
@@ -116,6 +119,16 @@ const Header = () => {
               LIVE
             </Link>
           )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="h-9 w-9"
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
         </div>
       </div>
     </header>
