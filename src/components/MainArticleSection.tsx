@@ -17,6 +17,8 @@ const MainArticleSection = () => {
         `)
         .eq("is_published", true)
         .eq("is_featured", true)
+        .eq("is_top_story", false)
+        .order("homepage_rank", { ascending: true })
         .order("published_at", { ascending: false })
         .limit(1)
         .maybeSingle();

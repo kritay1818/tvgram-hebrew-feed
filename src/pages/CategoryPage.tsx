@@ -40,7 +40,8 @@ const CategoryPage = () => {
         `)
         .eq("primary_category_id", cat.id)
         .eq("is_published", true)
-        .order("published_at", { ascending: false });
+        .order("published_at", { ascending: false })
+        .limit(20);
       
       if (error) throw error;
       return data;

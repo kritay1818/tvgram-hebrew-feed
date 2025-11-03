@@ -62,7 +62,7 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Large featured card */}
         {firstArticle && (
-          <div className="md:col-span-2 lg:col-span-1">
+          <div className="md:col-span-2">
             <LargeArticleCard
               id={firstArticle.id}
               title={firstArticle.title}

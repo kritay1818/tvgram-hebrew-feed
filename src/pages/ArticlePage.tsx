@@ -19,11 +19,32 @@ const ArticlePage = () => {
           video:videos(*)
         `)
         .eq("slug", slug)
-        .single();
+        .eq("is_published", true)
+        .maybeSingle();
       
       if (error) throw error;
       return data;
     },
+  });
+
+  const { data: relatedArticles } = useQuery({
+    queryKey: ["related-articles", article?.primary_category_id, article?.id],
+    queryFn: async () => {
+      if (!article?.primary_category_id || !article?.id) return [];
+      
+      const { data, error } = await supabase
+        .from("articles")
+        .select("id, title, slug, cover_url, published_at")
+        .eq("primary_category_id", article.primary_category_id)
+        .eq("is_published", true)
+        .neq("id", article.id)
+        .order("published_at", { ascending: false })
+        .limit(6);
+      
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!article?.primary_category_id && !!article?.id,
   });
 
   if (isLoading) {
@@ -59,6 +80,16 @@ const ArticlePage = () => {
       
       <article className="container py-8">
         <div className="mx-auto max-w-4xl">
+          {article.primary_category && (
+            <nav className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+              <a href="/" className="hover:text-primary">ראשי</a>
+              <span>/</span>
+              <a href={`/category/${article.primary_category.slug}`} className="hover:text-primary">
+                {article.primary_category.name}
+              </a>
+            </nav>
+          )}
+          
           {article.primary_category && (
             <div className="mb-4">
               <span className="inline-block bg-primary px-3 py-1 text-sm font-semibold text-primary-foreground">
@@ -127,6 +158,46 @@ const ArticlePage = () => {
             </div>
           )}
         </div>
+        
+        {relatedArticles && relatedArticles.length > 0 && (
+          <div className="container mt-12">
+            <h2 className="mb-6 text-2xl font-bold">כתבות קשורות</h2>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {relatedArticles.map((related) => (
+                <a
+                  key={related.id}
+                  href={`/news/${related.slug}`}
+                  className="group block overflow-hidden rounded-lg bg-card transition-shadow hover:shadow-lg"
+                >
+                  <div className="relative aspect-video overflow-hidden bg-muted">
+                    {related.cover_url ? (
+                      <img
+                        src={related.cover_url}
+                        alt={related.title}
+                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <span className="text-2xl font-bold text-muted-foreground/20">TVGRAM</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <h3 className="line-clamp-2 font-bold group-hover:text-primary">
+                      {related.title}
+                    </h3>
+                    {related.published_at && (
+                      <p className="mt-2 text-xs text-muted-foreground">
+                        {format(new Date(related.published_at), "d MMM yyyy", { locale: he })}
+                      </p>
+                    )}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </article>
     </div>
   );
