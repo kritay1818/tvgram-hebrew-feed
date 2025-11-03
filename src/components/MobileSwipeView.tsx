@@ -57,15 +57,15 @@ const MobileSwipeView = () => {
         <CategoryNav categories={categories} />
       </div>
 
-      {/* Ad Banner */}
-      <div className="absolute top-16 left-0 right-0 z-40">
-        <AdBanner size="leaderboard" className="mx-[5px]" />
+      {/* Ad Banner below categories */}
+      <div className="absolute top-14 left-0 right-0 z-40 bg-background">
+        <AdBanner size="leaderboard" className="mx-[5px] mb-2" />
       </div>
 
       <Carousel
         setApi={setApi}
         orientation="vertical"
-        className="h-full w-full pt-32"
+        className="h-full w-full pt-36"
         opts={{
           align: "start",
           loop: false,
@@ -136,7 +136,7 @@ const MobileSwipeView = () => {
       </Carousel>
 
       {/* Progress Indicator */}
-      <div className="fixed top-20 left-1/2 -translate-x-1/2 flex gap-1 z-50">
+      <div className="fixed top-32 left-1/2 -translate-x-1/2 flex gap-1 z-50">
         {articles.map((_, index) => (
           <div
             key={index}
