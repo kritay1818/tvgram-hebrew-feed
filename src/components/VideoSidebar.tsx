@@ -19,6 +19,21 @@ const VideoSidebar = () => {
     },
   });
 
+  const { data: breakingNews } = useQuery({
+    queryKey: ["sidebar-breaking"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("articles")
+        .select("id, title, slug, cover_url, published_at")
+        .eq("is_published", true)
+        .order("published_at", { ascending: false })
+        .limit(5);
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const { data: vodVideos } = useQuery({
     queryKey: ["sidebar-vod"],
     queryFn: async () => {
@@ -68,8 +83,49 @@ const VideoSidebar = () => {
         </div>
       )}
 
+      {/* Breaking News Section */}
+      {breakingNews && breakingNews.length > 0 && (
+        <div className="flex-shrink-0 border-t border-white/10">
+          <div className="bg-[#c62828] px-3 py-2 hidden md:block">
+            <h2 className="text-sm font-bold">מבזקים</h2>
+          </div>
+          
+          <div className="space-y-2 p-3 max-h-[300px] overflow-y-auto">
+            {breakingNews.map((article) => (
+              <Link
+                key={article.id}
+                to={`/news/${article.slug}`}
+                className="group block rounded p-2 hover:bg-white/5 transition-colors"
+              >
+                <div className="flex gap-2 items-start">
+                  <div className="relative h-12 w-16 flex-shrink-0 overflow-hidden rounded bg-black">
+                    {article.cover_url ? (
+                      <img
+                        src={article.cover_url}
+                        alt={article.title}
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <span className="text-[10px] font-bold text-white/40">TVGRAM</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xs font-semibold line-clamp-2 leading-tight">
+                      {article.title}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* VOD Section */}
-      <div className="flex-1 min-h-0 flex flex-col">
+      <div className="flex-1 min-h-0 flex flex-col border-t border-white/10">
         <div className="bg-[#2a3544] px-3 py-2 flex-shrink-0 hidden md:block">
           <h2 className="text-sm font-bold">צפה עכשיו</h2>
         </div>
