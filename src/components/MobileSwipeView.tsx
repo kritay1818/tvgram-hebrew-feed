@@ -3,7 +3,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
 import CategoryNav from "@/components/CategoryNav";
 import AdBanner from "@/components/AdBanner";
 
@@ -70,6 +69,8 @@ const MobileSwipeView = () => {
           align: "start",
           loop: false,
           skipSnaps: false,
+          dragFree: false,
+          containScroll: "trimSnaps",
         }}
       >
         <CarouselContent className="h-full">
@@ -93,7 +94,7 @@ const MobileSwipeView = () => {
                 </div>
 
                 {/* Article Content */}
-                <div className="flex-1 overflow-y-auto px-4 py-6">
+                <div className="flex-1 px-4 py-6 overflow-y-auto touch-pan-y">
                   <Link to={`/article/${article.slug}`}>
                     <h2 className="mb-3 text-2xl font-bold leading-tight hover:text-primary">
                       {article.title}
@@ -113,14 +114,6 @@ const MobileSwipeView = () => {
                     קרא עוד
                   </Link>
                 </div>
-
-                {/* Swipe Indicator */}
-                {index < articles.length - 1 && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground animate-bounce">
-                    <ChevronDown className="h-6 w-6" />
-                    <span className="text-xs">החלק למעלה</span>
-                  </div>
-                )}
               </div>
             </CarouselItem>
             
