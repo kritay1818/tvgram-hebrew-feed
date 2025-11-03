@@ -19,17 +19,8 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between gap-4">
-        {/* Left side - LIVE button + nav items */}
+        {/* Left side - nav items */}
         <div className="flex items-center gap-3 lg:gap-6">
-          {hasLive && (
-            <Link 
-              to="/live" 
-              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
-            >
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
-              LIVE
-            </Link>
-          )}
           <Link to="/category/crime" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             פלילי
           </Link>
@@ -56,7 +47,7 @@ const Header = () => {
           </div>
         </Link>
         
-        {/* Right side - nav items */}
+        {/* Right side - nav items + LIVE button */}
         <div className="flex items-center gap-3 lg:gap-6">
           <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             ספורט
@@ -67,6 +58,15 @@ const Header = () => {
           <Link to="/category/online" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             בטחוני
           </Link>
+          {hasLive && (
+            <Link 
+              to="/live" 
+              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+            >
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+              LIVE
+            </Link>
+          )}
         </div>
       </div>
     </header>
