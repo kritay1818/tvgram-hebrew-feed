@@ -27,12 +27,6 @@ const Header = () => {
           <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             פוליטי
           </Link>
-          <Link 
-            to="/" 
-            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
-          >
-            ראשי
-          </Link>
         </div>
         
         {/* Center - Logo */}
@@ -49,6 +43,12 @@ const Header = () => {
         
         {/* Right side - nav items + LIVE button */}
         <div className="flex items-center gap-3 lg:gap-6">
+          <Link 
+            to="/" 
+            className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
+          >
+            ראשי
+          </Link>
           <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             ספורט
           </Link>
