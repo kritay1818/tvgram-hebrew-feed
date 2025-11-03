@@ -37,7 +37,7 @@ const VideoSidebar = () => {
   const liveVideo = liveVideos?.[0];
 
   return (
-    <aside className="fixed left-0 top-20 bottom-8 w-64 border-r bg-gradient-to-b from-[#1a2332] to-[#0f1419] text-white overflow-hidden flex flex-col rounded-r-lg">
+    <aside className="fixed left-0 top-20 bottom-8 w-56 border-r bg-gradient-to-b from-[#1a2332] to-[#0f1419] text-white overflow-hidden flex flex-col rounded-r-lg">
       {/* Live Section */}
       {liveVideo && (
         <div className="flex-shrink-0">
