@@ -28,7 +28,7 @@ const Index = () => {
       <Header />
       <VideoSidebar />
       
-      <main className="container max-w-7xl py-6 pr-64">
+      <main className="container max-w-7xl py-6 pl-64">
         {/* Hero Featured Article */}
         <HeroSection />
         
