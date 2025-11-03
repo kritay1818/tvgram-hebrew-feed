@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import logo from "@/assets/logo.png";
 
 const Header = () => {
   const { data: hasLive } = useQuery({
@@ -27,28 +28,21 @@ const Header = () => {
           <Link to="/category/politics" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             פוליטי
           </Link>
-        </div>
-        
-        {/* Center - Logo */}
-        <Link to="/" className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
-          <div className="flex items-center gap-1">
-            <span className="text-xl lg:text-2xl font-bold" style={{ fontFamily: 'Arial Black, sans-serif' }}>
-              <span className="bg-[#1a1a2e] text-white px-2 py-0.5">TV</span>
-              <span className="text-foreground">⊚</span>
-            </span>
-            <span className="text-xl lg:text-2xl font-bold text-foreground">GRAM</span>
-            <span className="text-base lg:text-lg font-bold text-muted-foreground ml-1">NEWS</span>
-          </div>
-        </Link>
-        
-        {/* Right side - nav items + LIVE button */}
-        <div className="flex items-center gap-3 lg:gap-6">
           <Link 
             to="/" 
             className="rounded bg-[#1a1a2e] px-4 py-1.5 text-sm font-medium text-white hover:opacity-90"
           >
             ראשי
           </Link>
+        </div>
+        
+        {/* Center - Logo */}
+        <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+          <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
+        </Link>
+        
+        {/* Right side - nav items + LIVE button */}
+        <div className="flex items-center gap-3 lg:gap-6">
           <Link to="/category/sport" className="text-sm font-medium transition-colors hover:text-primary hidden lg:block">
             ספורט
           </Link>
