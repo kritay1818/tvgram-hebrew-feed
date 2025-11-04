@@ -128,7 +128,7 @@ const ArticlePage = () => {
               <img
                 src={article.cover_url}
                 alt={article.title}
-                className="h-auto w-full object-cover aspect-video"
+                className="h-auto w-full max-h-[350px] object-cover"
               />
             </div>
           )}
