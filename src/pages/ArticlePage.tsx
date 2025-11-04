@@ -133,6 +133,9 @@ const ArticlePage = () => {
             </div>
           )}
           
+          {/* Ad below the picture */}
+          <AdBanner size="leaderboard" className="my-8" />
+          
           {article.video && article.video.video_url && (
             <div className="mb-8 aspect-video overflow-hidden rounded-lg bg-black">
               <iframe
@@ -150,9 +153,6 @@ const ArticlePage = () => {
               dangerouslySetInnerHTML={{ __html: article.body_html }}
             />
           )}
-          
-          {/* Ad in the middle */}
-          <AdBanner size="leaderboard" className="my-8" />
           
           {article.tags && article.tags.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-2">
