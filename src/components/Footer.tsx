@@ -54,6 +54,10 @@ const Footer = () => {
           <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
             מדיניות פרטיות
           </Link>
+          <span className="text-muted-foreground">|</span>
+          <Link to="/accessibility" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+            הצהרת נגישות
+          </Link>
         </div>
         <p className="text-xs text-muted-foreground">
           © 2025 כל הזכויות שמורות

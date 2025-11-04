@@ -11,6 +11,7 @@ import CategoryPage from "./pages/CategoryPage";
 import LivePage from "./pages/LivePage";
 import VodPage from "./pages/VodPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Accessibility from "./pages/Accessibility";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/live" element={<LivePage />} />
             <Route path="/vod" element={<VodPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/accessibility" element={<Accessibility />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
