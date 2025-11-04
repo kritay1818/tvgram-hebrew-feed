@@ -96,7 +96,7 @@ const AccessibilityMenu = () => {
       {/* Floating Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed left-4 top-1/2 -translate-y-1/2 z-50 rounded-full w-14 h-14 bg-[#0066cc] hover:bg-[#0052a3] shadow-lg"
+        className="fixed left-4 bottom-4 z-50 rounded-full w-14 h-14 bg-[#0066cc] hover:bg-[#0052a3] shadow-lg"
         aria-label="תפריט נגישות"
       >
         <Accessibility className="h-7 w-7 text-white" />
@@ -104,7 +104,7 @@ const AccessibilityMenu = () => {
 
       {/* Accessibility Menu */}
       {isOpen && (
-        <Card className="fixed left-20 top-1/2 -translate-y-1/2 z-50 p-6 shadow-2xl w-80 max-h-[90vh] overflow-y-auto">
+        <Card className="fixed left-20 bottom-4 z-50 p-6 shadow-2xl w-80 max-h-[80vh] overflow-y-auto">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-primary flex items-center gap-2">
               <Accessibility className="h-5 w-5" />
