@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ShareButtons from "@/components/ShareButtons";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 
@@ -166,6 +167,8 @@ const ArticlePage = () => {
               ))}
             </div>
           )}
+          
+          <ShareButtons title={article.title} />
         </div>
         
         {relatedArticles && relatedArticles.length > 0 && (
