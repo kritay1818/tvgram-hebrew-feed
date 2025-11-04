@@ -41,6 +41,7 @@ const CategoryPage = () => {
         `)
         .eq("primary_category_id", cat.id)
         .eq("is_published", true)
+        .order("homepage_rank", { ascending: true, nullsFirst: false })
         .order("published_at", { ascending: false })
         .limit(20);
       

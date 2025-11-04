@@ -31,6 +31,7 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
         `)
         .eq("primary_category_id", category.id)
         .eq("is_published", true)
+        .order("homepage_rank", { ascending: true, nullsFirst: false })
         .order("published_at", { ascending: false })
         .limit(limit);
       
