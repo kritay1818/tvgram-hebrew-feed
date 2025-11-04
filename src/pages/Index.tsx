@@ -8,6 +8,7 @@ import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
+import AccessibilityMenu from "@/components/AccessibilityMenu";
 const Index = () => {
   // Fetch all categories in navigation order
   const {
@@ -27,6 +28,7 @@ const Index = () => {
   });
   return <div className="min-h-screen bg-background">
       <Header />
+      <AccessibilityMenu />
       <div className="hidden md:block">
         <VideoSidebar />
       </div>
