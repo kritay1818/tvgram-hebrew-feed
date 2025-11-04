@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
 interface Category {
   id: string;
@@ -13,23 +13,36 @@ interface CategoryNavProps {
 const CategoryNav = ({ categories }: CategoryNavProps) => {
   if (!categories || categories.length === 0) return null;
 
+  const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+    e.preventDefault();
+    const element = document.getElementById(`category-${slug}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="md:hidden mb-6">
       <div className="flex gap-2 overflow-x-auto pb-2 px-4" style={{ scrollbarWidth: 'thin' }}>
-        <Link
-          to="/"
+        <a
+          href="#top"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap flex-shrink-0"
         >
           ראשי
-        </Link>
+        </a>
         {categories.map((category) => (
-          <Link
+          <a
             key={category.id}
-            to={`/category/${category.slug}`}
+            href={`#category-${category.slug}`}
+            onClick={(e) => handleCategoryClick(e, category.slug)}
             className="px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap flex-shrink-0"
           >
             {category.name}
-          </Link>
+          </a>
         ))}
       </div>
     </div>
