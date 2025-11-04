@@ -15,12 +15,12 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
 
   return (
     <div className="md:hidden mb-6 px-4">
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {categories.map((category) => (
           <Link
             key={category.id}
             to={`/category/${category.slug}`}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors text-center"
+            className="px-3 py-2 bg-primary text-primary-foreground rounded-md text-xs font-medium hover:bg-primary/90 transition-colors text-center"
           >
             {category.name}
           </Link>
