@@ -40,50 +40,43 @@ const MainArticleSection = () => {
         to={`/article/${mainArticle.slug}`}
         className="group block"
       >
-        <article className="relative overflow-hidden rounded-lg shadow-xl transition-all hover:shadow-2xl" style={{
-          background: 'linear-gradient(135deg, #006bb3 0%, #0088cc 100%)'
-        }}>
-          <div className="grid gap-0 lg:grid-cols-[45%_55%]">
+        <article className="overflow-hidden rounded-lg bg-card transition-shadow hover:shadow-lg">
+          <div className="grid gap-0 lg:grid-cols-2">
             {/* Image Section */}
-            <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+            <div className="relative aspect-video overflow-hidden bg-muted">
               <img
                 src={mainArticle.cover_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"}
                 alt={mainArticle.title}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               {isLive && (
-                <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-sm font-bold text-white">
-                  <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-white"></span>
+                <div className="absolute top-3 left-3 bg-news-live px-3 py-1 text-xs font-bold text-white">
                   LIVE
                 </div>
               )}
             </div>
 
-            {/* Content Section - White text on blue gradient */}
-            <div className="flex flex-col justify-center p-3 lg:p-12 text-white">
+            {/* Content Section */}
+            <div className="flex flex-col justify-center p-4 lg:p-6">
               {categoryName && (
-                <Badge 
-                  variant="outline" 
-                  className="mb-1.5 lg:mb-4 w-fit text-[10px] lg:text-xs font-semibold border-white/30 bg-white/10 text-white hover:bg-white/20"
-                >
-                  {categoryName}
-                </Badge>
+                <div className="mb-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-primary">
+                    {categoryName}
+                  </span>
+                </div>
               )}
               
-              <h2 className="mb-1.5 lg:mb-4 text-base lg:text-3xl xl:text-4xl font-bold leading-tight text-white drop-shadow-sm">
+              <h2 className="mb-3 line-clamp-2 text-xl lg:text-2xl font-bold leading-tight transition-colors group-hover:text-primary">
                 {mainArticle.title}
               </h2>
               
               {mainArticle.summary && (
-                <p className="mb-2 lg:mb-6 text-xs lg:text-lg text-white/90 line-clamp-2 lg:line-clamp-3">
+                <p className="mb-3 text-sm lg:text-base text-muted-foreground line-clamp-2">
                   {mainArticle.summary}
                 </p>
               )}
 
-              <div className="flex items-center gap-2 lg:gap-4 text-xs lg:text-sm text-white/80">
-                {mainArticle.author && (
-                  <span className="font-medium">{mainArticle.author}</span>
-                )}
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 {mainArticle.published_at && (
                   <time>
                     {new Date(mainArticle.published_at).toLocaleDateString('he-IL', {
@@ -92,6 +85,10 @@ const MainArticleSection = () => {
                       year: 'numeric'
                     })}
                   </time>
+                )}
+                {mainArticle.published_at && mainArticle.author && <span>·</span>}
+                {mainArticle.author && (
+                  <span>{mainArticle.author}</span>
                 )}
               </div>
             </div>

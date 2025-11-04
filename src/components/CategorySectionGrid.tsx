@@ -61,26 +61,9 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
         </Link>
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* Large featured card */}
-        {firstArticle && (
-          <div className="md:col-span-2">
-            <LargeArticleCard
-              id={firstArticle.id}
-              title={firstArticle.title}
-              summary={firstArticle.summary || undefined}
-              coverUrl={firstArticle.cover_url || undefined}
-              slug={firstArticle.slug}
-              categoryName={category.name}
-              isLive={firstArticle.videos?.is_live}
-              publishedAt={firstArticle.published_at || undefined}
-              author={firstArticle.author || undefined}
-            />
-          </div>
-        )}
-        
-        {/* Standard cards */}
-        {restArticles.slice(0, 6).map((article) => (
+      <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {/* All articles use StandardArticleCard for consistency */}
+        {articles.map((article) => (
           <StandardArticleCard
             key={article.id}
             id={article.id}

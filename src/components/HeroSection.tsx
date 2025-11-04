@@ -36,11 +36,11 @@ const HeroSection = () => {
     : "";
 
   return (
-    <section className="mb-10">
+    <section className="mb-12">
       <Link to={`/news/${featuredArticle.slug}`} className="group">
-        <div className="grid gap-6 overflow-hidden rounded-lg bg-card lg:grid-cols-2">
+        <div className="grid gap-0 overflow-hidden rounded-lg bg-card shadow-xl transition-all hover:shadow-2xl lg:grid-cols-2">
           {/* Image */}
-          <div className="relative aspect-video overflow-hidden bg-muted lg:order-2">
+          <div className="relative aspect-video lg:aspect-auto lg:min-h-[500px] overflow-hidden bg-muted lg:order-2">
             {featuredArticle.cover_url ? (
               <img
                 src={featuredArticle.cover_url}
@@ -70,7 +70,7 @@ const HeroSection = () => {
               </div>
             )}
             
-            <h1 className="mb-4 line-clamp-2 text-3xl font-bold leading-tight transition-colors group-hover:text-primary lg:text-4xl">
+            <h1 className="mb-4 line-clamp-2 text-3xl font-bold leading-tight transition-colors group-hover:text-primary lg:text-5xl">
               {featuredArticle.title}
             </h1>
             
