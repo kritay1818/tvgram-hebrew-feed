@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -48,6 +49,11 @@ const Footer = () => {
           <span className="text-xl font-bold text-primary">TVGRAM</span>
           <span className="text-xl font-bold text-primary">TVGRAM</span>
           <span className="text-xl font-bold text-primary">TVGRAM</span>
+        </div>
+        <div className="flex items-center justify-center gap-4 mb-2">
+          <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+            מדיניות פרטיות
+          </Link>
         </div>
         <p className="text-xs text-muted-foreground">
           © 2025 כל הזכויות שמורות
