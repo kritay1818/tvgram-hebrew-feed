@@ -14,11 +14,11 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
   if (!categories || categories.length === 0) return null;
 
   return (
-    <div className="md:hidden mb-6 px-4">
-      <div className="grid grid-cols-5 gap-2">
+    <div className="md:hidden mb-6">
+      <div className="flex gap-2 overflow-x-auto pb-2 px-4" style={{ scrollbarWidth: 'thin' }}>
         <Link
           to="/"
-          className="px-1.5 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center"
+          className="px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap flex-shrink-0"
         >
           ראשי
         </Link>
@@ -26,7 +26,7 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
           <Link
             key={category.id}
             to={`/category/${category.slug}`}
-            className="px-1.5 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center"
+            className="px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap flex-shrink-0"
           >
             {category.name}
           </Link>
