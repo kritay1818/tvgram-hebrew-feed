@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
+import AdBanner from "@/components/AdBanner";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 
@@ -82,6 +83,9 @@ const ArticlePage = () => {
       
       <article className="container py-8">
         <div className="mx-auto max-w-4xl">
+          {/* Ad at the top */}
+          <AdBanner size="leaderboard" className="mb-6" />
+          
           {article.primary_category && (
             <nav className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
               <a href="/" className="hover:text-primary">ראשי</a>
@@ -147,6 +151,9 @@ const ArticlePage = () => {
             />
           )}
           
+          {/* Ad in the middle */}
+          <AdBanner size="leaderboard" className="my-8" />
+          
           {article.tags && article.tags.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-2">
               {article.tags.map((tag) => (
@@ -159,6 +166,9 @@ const ArticlePage = () => {
               ))}
             </div>
           )}
+          
+          {/* Ad at the bottom */}
+          <AdBanner size="leaderboard" className="my-8" />
           
           <ShareButtons title={article.title} />
         </div>
