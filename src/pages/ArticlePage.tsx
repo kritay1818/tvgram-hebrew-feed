@@ -141,18 +141,10 @@ const ArticlePage = () => {
           )}
           
           {article.body_html && (
-            <div className="prose prose-lg max-w-none">
-              {article.body_html.split('\n\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph.split('\n').map((line, lineIndex, array) => (
-                    <span key={lineIndex}>
-                      {line}
-                      {lineIndex < array.length - 1 && <br />}
-                    </span>
-                  ))}
-                </p>
-              ))}
-            </div>
+            <div 
+              className="prose prose-lg max-w-none dark:prose-invert"
+              dangerouslySetInnerHTML={{ __html: article.body_html }}
+            />
           )}
           
           {article.tags && article.tags.length > 0 && (
