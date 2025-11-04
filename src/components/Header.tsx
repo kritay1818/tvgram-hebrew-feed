@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 import { Menu, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "next-themes";
