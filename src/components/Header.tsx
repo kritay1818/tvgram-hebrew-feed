@@ -68,7 +68,7 @@ const Header = () => {
     <Link 
       to={path}
       onClick={onClick}
-      className={`rounded px-2 py-1 text-xs font-medium transition-colors whitespace-nowrap ${
+      className={`rounded px-3 py-1.5 text-sm font-medium transition-colors whitespace-nowrap ${
         isActive(path) 
           ? "bg-[#1a1a2e] text-white hover:opacity-90" 
           : "hover:text-primary"
@@ -81,9 +81,9 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-header">
       <div className="container h-16">
-        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-2">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-3">
           {/* Left - Navigation Items */}
-          <div className="flex items-center gap-1 justify-start flex-wrap">
+          <div className="flex items-center gap-2 justify-start flex-wrap">
             {navItems.slice(0, 5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
@@ -91,18 +91,18 @@ const Header = () => {
           
           {/* Center - Logo */}
           <Link to="/" className="flex items-center justify-center px-4">
-            <img src={logo} alt="TVGRAM LIVE" className="h-10 w-auto" />
+            <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
-          <div className="flex items-center gap-1 justify-end flex-wrap">
+          <div className="flex items-center gap-2 justify-end flex-wrap">
             {navItems.slice(5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
             {moreCategories.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded px-2 py-1 text-xs font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
+                  <button className="rounded px-3 py-1.5 text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
                     עוד
                     <ChevronDown className="h-3 w-3" />
                   </button>
@@ -112,7 +112,7 @@ const Header = () => {
                     <DropdownMenuItem key={cat.id} asChild>
                       <Link 
                         to={`/category/${cat.slug}`}
-                        className="cursor-pointer text-xs"
+                        className="cursor-pointer text-sm"
                       >
                         {cat.name}
                       </Link>
@@ -124,7 +124,7 @@ const Header = () => {
             {hasLive && (
               <Link 
                 to="/live" 
-                className="flex items-center gap-1 rounded bg-news-live px-2 py-1 text-xs font-bold text-white hover:opacity-90 whitespace-nowrap"
+                className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 whitespace-nowrap"
               >
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
                 LIVE
@@ -134,7 +134,7 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-8 w-8"
+              className="h-9 w-9"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
