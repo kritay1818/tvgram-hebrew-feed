@@ -48,6 +48,7 @@ const Header = () => {
 
   const navItems = [
     { path: "/", label: "ראשי" },
+    { path: "/category/food", label: "אוכל" },
     ...(categories?.map(cat => ({
       path: `/category/${cat.slug}`,
       label: cat.name
