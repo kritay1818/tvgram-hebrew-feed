@@ -47,8 +47,6 @@ const Footer = () => {
         </div>
         <div className="mb-2 flex items-center justify-center gap-2">
           <span className="text-xl font-bold text-primary">TVGRAM</span>
-          <span className="text-xl font-bold text-primary">TVGRAM</span>
-          <span className="text-xl font-bold text-primary">TVGRAM</span>
         </div>
         <div className="flex items-center justify-center gap-4 mb-2">
           <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
