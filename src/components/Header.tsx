@@ -68,7 +68,7 @@ const Header = () => {
     <Link 
       to={path}
       onClick={onClick}
-      className={`rounded px-3 py-1.5 text-sm font-medium transition-colors whitespace-nowrap ${
+      className={`rounded px-4 py-2 text-base font-medium transition-colors whitespace-nowrap ${
         isActive(path) 
           ? "bg-[#1a1a2e] text-white hover:opacity-90" 
           : "hover:text-primary"
@@ -91,7 +91,7 @@ const Header = () => {
           
           {/* Center - Logo */}
           <Link to="/" className="flex items-center justify-center px-4">
-            <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
+            <img src={logo} alt="TVGRAM LIVE" className="h-14 w-auto" />
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
@@ -102,9 +102,9 @@ const Header = () => {
             {moreCategories.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded px-3 py-1.5 text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
+                  <button className="rounded px-4 py-2 text-base font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
                     עוד
-                    <ChevronDown className="h-3 w-3" />
+                    <ChevronDown className="h-4 w-4" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-background border z-50">
@@ -112,7 +112,7 @@ const Header = () => {
                     <DropdownMenuItem key={cat.id} asChild>
                       <Link 
                         to={`/category/${cat.slug}`}
-                        className="cursor-pointer text-sm"
+                        className="cursor-pointer text-base"
                       >
                         {cat.name}
                       </Link>
