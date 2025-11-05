@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
-import { Menu, Moon, Sun } from "lucide-react";
+import { Menu, Moon, Sun, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import {
@@ -11,6 +11,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const location = useLocation();
@@ -46,12 +52,15 @@ const Header = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const displayCategories = categories?.slice(0, 9) || [];
+  const moreCategories = categories?.slice(9) || [];
+
   const navItems = [
     { path: "/", label: "ראשי" },
-    ...(categories?.map(cat => ({
+    ...displayCategories.map(cat => ({
       path: `/category/${cat.slug}`,
       label: cat.name
-    })) || []),
+    })),
     { path: "/vod", label: "VOD" },
   ];
 
@@ -85,11 +94,33 @@ const Header = () => {
             <img src={logo} alt="TVGRAM LIVE" className="h-10 w-auto" />
           </Link>
           
-          {/* Right - nav items + LIVE button + Theme toggle */}
+          {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
           <div className="flex items-center gap-1 justify-end flex-wrap">
             {navItems.slice(5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
+            {moreCategories.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="rounded px-2 py-1 text-xs font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
+                    עוד
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-background border z-50">
+                  {moreCategories.map((cat) => (
+                    <DropdownMenuItem key={cat.id} asChild>
+                      <Link 
+                        to={`/category/${cat.slug}`}
+                        className="cursor-pointer text-xs"
+                      >
+                        {cat.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             {hasLive && (
               <Link 
                 to="/live" 
@@ -130,6 +161,19 @@ const Header = () => {
                     onClick={() => setIsOpen(false)}
                   />
                 ))}
+                {moreCategories.length > 0 && (
+                  <>
+                    <div className="text-xs font-bold text-muted-foreground px-2">עוד</div>
+                    {moreCategories.map((cat) => (
+                      <NavLink
+                        key={cat.id}
+                        path={`/category/${cat.slug}`}
+                        label={cat.name}
+                        onClick={() => setIsOpen(false)}
+                      />
+                    ))}
+                  </>
+                )}
                 {hasLive && (
                   <Link 
                     to="/live"
