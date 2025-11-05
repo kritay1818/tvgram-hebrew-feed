@@ -59,7 +59,7 @@ const Header = () => {
     <Link 
       to={path}
       onClick={onClick}
-      className={`rounded px-4 py-1.5 text-sm font-medium transition-colors ${
+      className={`rounded px-2 py-1 text-xs font-medium transition-colors whitespace-nowrap ${
         isActive(path) 
           ? "bg-[#1a1a2e] text-white hover:opacity-90" 
           : "hover:text-primary"
@@ -72,28 +72,28 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-header">
       <div className="container h-16">
-        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-4">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-2">
           {/* Left - Navigation Items */}
-          <div className="flex items-center gap-2 xl:gap-3 justify-start">
+          <div className="flex items-center gap-1 justify-start flex-wrap">
             {navItems.slice(0, 5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
           </div>
           
           {/* Center - Logo */}
-          <Link to="/" className="flex items-center justify-center">
-            <img src={logo} alt="TVGRAM LIVE" className="h-12 xl:h-14 w-auto" />
+          <Link to="/" className="flex items-center justify-center px-4">
+            <img src={logo} alt="TVGRAM LIVE" className="h-10 w-auto" />
           </Link>
           
           {/* Right - nav items + LIVE button + Theme toggle */}
-          <div className="flex items-center gap-2 xl:gap-3 justify-end">
+          <div className="flex items-center gap-1 justify-end flex-wrap">
             {navItems.slice(5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
             {hasLive && (
               <Link 
                 to="/live" 
-                className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+                className="flex items-center gap-1 rounded bg-news-live px-2 py-1 text-xs font-bold text-white hover:opacity-90 whitespace-nowrap"
               >
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
                 LIVE
@@ -103,7 +103,7 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9"
+              className="h-8 w-8"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
