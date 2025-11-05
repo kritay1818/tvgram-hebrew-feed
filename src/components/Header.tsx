@@ -79,7 +79,7 @@ const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-header">
+    <header className="sticky top-0 z-[100] w-full border-b bg-header shadow-sm">
       <div className="container h-16">
         <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-3">
           {/* Left - Navigation Items */}
