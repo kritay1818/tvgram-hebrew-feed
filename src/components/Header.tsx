@@ -71,7 +71,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-header">
-      <div className="container flex h-16 items-center justify-between gap-4">
+      <div className="container flex h-16 items-center justify-between gap-4 relative">
         {/* Mobile - Hamburger Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="lg:hidden">
@@ -104,20 +104,20 @@ const Header = () => {
         </Sheet>
 
         {/* Desktop - Navigation Items */}
-        <div className="hidden lg:flex items-center gap-3 lg:gap-6">
+        <div className="hidden lg:flex items-center gap-2 xl:gap-4 flex-1 justify-start">
           {navItems.slice(0, 5).map((item) => (
             <NavLink key={item.path} path={item.path} label={item.label} />
           ))}
         </div>
         
         {/* Center - Logo */}
-        <Link to="/" className="absolute left-1/2 -translate-x-1/2">
-          <img src={logo} alt="TVGRAM LIVE" className="h-12 md:h-16 lg:h-20 w-auto" />
+        <Link to="/" className="absolute left-1/2 -translate-x-1/2 z-10">
+          <img src={logo} alt="TVGRAM LIVE" className="h-12 md:h-14 lg:h-16 w-auto" />
         </Link>
         
         {/* Right side - nav items + LIVE button + Theme toggle */}
-        <div className="flex items-center gap-3 lg:gap-6">
-          <div className="hidden lg:flex items-center gap-3 lg:gap-6">
+        <div className="flex items-center gap-2 xl:gap-4 flex-1 justify-end">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-4">
             {navItems.slice(5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
