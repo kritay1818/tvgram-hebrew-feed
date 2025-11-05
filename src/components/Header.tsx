@@ -84,19 +84,19 @@ const Header = () => {
         <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-3">
           {/* Left - Navigation Items */}
           <div className="flex items-center gap-2 justify-start flex-wrap">
-            {navItems.slice(0, 5).map((item) => (
+            {navItems.slice(0, 7).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
           </div>
           
           {/* Center - Logo */}
           <Link to="/" className="flex items-center justify-center px-4">
-            <img src={logo} alt="TVGRAM LIVE" className="h-11 w-auto" />
+            <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
           <div className="flex items-center gap-2 justify-end flex-wrap">
-            {navItems.slice(5).map((item) => (
+            {navItems.slice(7).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
             {moreCategories.length > 0 && (
