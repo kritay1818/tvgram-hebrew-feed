@@ -68,7 +68,7 @@ const Header = () => {
     <Link 
       to={path}
       onClick={onClick}
-      className={`rounded px-4 py-2 text-base font-medium transition-colors whitespace-nowrap ${
+      className={`rounded px-3 py-1.5 text-sm font-medium transition-colors whitespace-nowrap flex items-center ${
         isActive(path) 
           ? "bg-[#1a1a2e] text-white hover:opacity-90" 
           : "hover:text-primary"
@@ -91,7 +91,7 @@ const Header = () => {
           
           {/* Center - Logo */}
           <Link to="/" className="flex items-center justify-center px-4">
-            <img src={logo} alt="TVGRAM LIVE" className="h-14 w-auto" />
+            <img src={logo} alt="TVGRAM LIVE" className="h-11 w-auto" />
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
@@ -102,9 +102,9 @@ const Header = () => {
             {moreCategories.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded px-4 py-2 text-base font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap">
+                  <button className="rounded px-3 py-1.5 text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 whitespace-nowrap h-[34px]">
                     עוד
-                    <ChevronDown className="h-4 w-4" />
+                    <ChevronDown className="h-3 w-3" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-background border z-50">
@@ -112,7 +112,7 @@ const Header = () => {
                     <DropdownMenuItem key={cat.id} asChild>
                       <Link 
                         to={`/category/${cat.slug}`}
-                        className="cursor-pointer text-base"
+                        className="cursor-pointer text-sm"
                       >
                         {cat.name}
                       </Link>
@@ -134,7 +134,7 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9"
+              className="h-[34px] w-[34px]"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
