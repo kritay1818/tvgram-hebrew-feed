@@ -71,76 +71,104 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-header">
-      <div className="container flex h-16 items-center justify-between gap-4 relative">
-        {/* Mobile - Hamburger Menu */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="lg:hidden">
-            <button className="p-2 hover:bg-accent rounded-md">
-              <Menu className="h-6 w-6" />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[280px]">
-            <nav className="flex flex-col gap-4 mt-8">
-              {navItems.map((item) => (
-                <NavLink 
-                  key={item.path} 
-                  path={item.path} 
-                  label={item.label}
-                  onClick={() => setIsOpen(false)}
-                />
-              ))}
-              {hasLive && (
-                <Link 
-                  to="/live"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 w-fit"
-                >
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
-                  LIVE
-                </Link>
-              )}
-            </nav>
-          </SheetContent>
-        </Sheet>
-
-        {/* Desktop - Navigation Items */}
-        <div className="hidden lg:flex items-center gap-2 xl:gap-4 flex-1 justify-start">
-          {navItems.slice(0, 5).map((item) => (
-            <NavLink key={item.path} path={item.path} label={item.label} />
-          ))}
-        </div>
-        
-        {/* Center - Logo */}
-        <Link to="/" className="absolute left-1/2 -translate-x-1/2 z-10">
-          <img src={logo} alt="TVGRAM LIVE" className="h-12 md:h-14 lg:h-16 w-auto" />
-        </Link>
-        
-        {/* Right side - nav items + LIVE button + Theme toggle */}
-        <div className="flex items-center gap-2 xl:gap-4 flex-1 justify-end">
-          <div className="hidden lg:flex items-center gap-2 xl:gap-4">
-            {navItems.slice(5).map((item) => (
+      <div className="container h-16">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-4">
+          {/* Left - Navigation Items */}
+          <div className="flex items-center gap-2 xl:gap-3 justify-start">
+            {navItems.slice(0, 5).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
           </div>
-          {hasLive && (
-            <Link 
-              to="/live" 
-              className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+          
+          {/* Center - Logo */}
+          <Link to="/" className="flex items-center justify-center">
+            <img src={logo} alt="TVGRAM LIVE" className="h-12 xl:h-14 w-auto" />
+          </Link>
+          
+          {/* Right - nav items + LIVE button + Theme toggle */}
+          <div className="flex items-center gap-2 xl:gap-3 justify-end">
+            {navItems.slice(5).map((item) => (
+              <NavLink key={item.path} path={item.path} label={item.label} />
+            ))}
+            {hasLive && (
+              <Link 
+                to="/live" 
+                className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+              >
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+                LIVE
+              </Link>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="h-9 w-9"
             >
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
-              LIVE
-            </Link>
-          )}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="h-9 w-9"
-          >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="flex lg:hidden h-full items-center justify-between gap-4">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <button className="p-2 hover:bg-accent rounded-md">
+                <Menu className="h-6 w-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px]">
+              <nav className="flex flex-col gap-4 mt-8">
+                {navItems.map((item) => (
+                  <NavLink 
+                    key={item.path} 
+                    path={item.path} 
+                    label={item.label}
+                    onClick={() => setIsOpen(false)}
+                  />
+                ))}
+                {hasLive && (
+                  <Link 
+                    to="/live"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 w-fit"
+                  >
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+                    LIVE
+                  </Link>
+                )}
+              </nav>
+            </SheetContent>
+          </Sheet>
+
+          <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
+          </Link>
+
+          <div className="flex items-center gap-2">
+            {hasLive && (
+              <Link 
+                to="/live" 
+                className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90"
+              >
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
+                LIVE
+              </Link>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="h-9 w-9"
+            >
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </div>
         </div>
       </div>
     </header>
