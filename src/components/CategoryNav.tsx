@@ -22,7 +22,7 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
   };
 
   return (
-    <div className="md:hidden sticky top-0 z-50 bg-background pb-4 pt-2 shadow-sm">
+    <div className="md:hidden mb-6">
       <div className="flex gap-2 overflow-x-auto pb-2 px-4" style={{ scrollbarWidth: 'thin' }}>
         <a
           href="#top"
