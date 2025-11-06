@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Category {
   id: string;
@@ -11,13 +12,24 @@ interface CategoryNavProps {
 }
 
 const CategoryNav = ({ categories }: CategoryNavProps) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
+  
   if (!categories || categories.length === 0) return null;
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
     e.preventDefault();
-    const element = document.getElementById(`category-${slug}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    if (isHomePage) {
+      // On homepage, just scroll to section
+      const element = document.getElementById(`category-${slug}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // On other pages, navigate to homepage then scroll
+      navigate('/', { state: { scrollTo: `category-${slug}` } });
     }
   };
 
@@ -28,7 +40,11 @@ const CategoryNav = ({ categories }: CategoryNavProps) => {
           href="#top"
           onClick={(e) => {
             e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (isHomePage) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              navigate('/');
+            }
           }}
           className="px-3 py-1.5 bg-primary text-primary-foreground rounded-md text-[11px] font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap flex-shrink-0"
         >

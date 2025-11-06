@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MainArticleSection from "@/components/MainArticleSection";
@@ -8,7 +10,23 @@ import AdBanner from "@/components/AdBanner";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
+
 const Index = () => {
+  const location = useLocation();
+  
+  // Handle scroll to section after navigation
+  useEffect(() => {
+    const state = location.state as { scrollTo?: string };
+    if (state?.scrollTo) {
+      // Small delay to ensure content is rendered
+      setTimeout(() => {
+        const element = document.getElementById(state.scrollTo);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [location]);
   // Fetch all categories in navigation order
   const {
     data: categories
