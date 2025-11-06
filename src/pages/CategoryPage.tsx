@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
+import CategoryNav from "@/components/CategoryNav";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -16,6 +17,20 @@ const CategoryPage = () => {
         .select("*")
         .eq("slug", slug)
         .single();
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: categories } = useQuery({
+    queryKey: ["nav-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("*")
+        .eq("is_in_nav", true)
+        .order("order_index", { ascending: true });
       
       if (error) throw error;
       return data;
@@ -55,6 +70,9 @@ const CategoryPage = () => {
       <Header />
       
       <main className="container py-8">
+        {/* Mobile Category Navigation */}
+        <CategoryNav categories={categories} />
+        
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-news-category">
             {slug === 'online' ? 'חדשות ברשת' : slug === 'recommended' ? 'מומלצים' : category?.name || slug}
