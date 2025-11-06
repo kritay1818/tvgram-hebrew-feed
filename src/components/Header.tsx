@@ -91,7 +91,7 @@ const Header = () => {
           
           {/* Center - Logo */}
           <Link to="/" className="flex items-center justify-center px-4">
-            <img src={logo} alt="TVGRAM LIVE" className="h-12 w-auto" />
+            <img src={logo} alt="TVGRAM LIVE" className="h-20 w-auto" />
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
