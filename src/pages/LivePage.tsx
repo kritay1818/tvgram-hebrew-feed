@@ -36,16 +36,15 @@ const LivePage = () => {
         
         <div className="mb-8">
           <Card className="overflow-hidden">
-            <div className="relative aspect-video bg-black">
+            <div className="relative aspect-video bg-black flex items-center justify-center">
               <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/live_stream?channel=UCDkHYlC5yVaTVenaGKtCvEw" 
+                src="https://www.youtube.com/embed/live_stream?channel=UCDkHYlC5yVaTVenaGKtCvEw"
+                width="560" 
+                height="315"
                 frameBorder="0" 
-                allowFullScreen
-                title="Live Stream"
-                className="absolute inset-0"
-              />
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen>
+              </iframe>
             </div>
           </Card>
         </div>
