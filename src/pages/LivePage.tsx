@@ -46,6 +46,10 @@ const LivePage = () => {
                 title="Live Stream"
                 className="absolute inset-0"
               />
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 text-white">
+                <p className="text-xl font-semibold mb-2">Stream is currently offline</p>
+                <p className="text-muted-foreground">Check back soon!</p>
+              </div>
             </div>
           </Card>
         </div>
