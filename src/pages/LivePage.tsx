@@ -34,6 +34,22 @@ const LivePage = () => {
           </div>
         </div>
         
+        <div className="mb-8">
+          <Card className="overflow-hidden">
+            <div className="relative aspect-video bg-black">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube.com/embed/live_stream?channel=UCDkHYlC5yVaTVenaGKtCvEw" 
+                frameBorder="0" 
+                allowFullScreen
+                title="Live Stream"
+                className="absolute inset-0"
+              />
+            </div>
+          </Card>
+        </div>
+        
         {isLoading ? (
           <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
             {[...Array(8)].map((_, i) => (
