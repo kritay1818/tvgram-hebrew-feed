@@ -49,25 +49,27 @@ const Index = () => {
         <VideoSidebar />
       </div>
       
-      <main className="w-full py-8 md:pl-56 px-4 md:px-6">
-        {/* Mobile Category Navigation */}
-        <CategoryNav categories={categories} />
-        
-        {/* Hero Featured Article */}
-        <HeroSection />
-        
-        {/* Ad after hero */}
-        <AdBanner size="leaderboard" className="mx-[5px] mb-6 px-0" />
-        
-        {/* Main Featured Article */}
-        <MainArticleSection />
-        
-        {/* Dynamic category sections */}
-        {categories?.map((category, index) => <div key={category.id}>
-            <CategorySectionGrid categorySlug={category.slug} limit={7} />
-            {/* Ad between every 2 sections */}
-            {index % 2 === 1 && <AdBanner size="leaderboard" className="my-8" />}
-          </div>)}
+      <main className="w-full py-8 md:pl-56">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
+          {/* Mobile Category Navigation */}
+          <CategoryNav categories={categories} />
+          
+          {/* Hero Featured Article */}
+          <HeroSection />
+          
+          {/* Ad after hero */}
+          <AdBanner size="leaderboard" className="mx-[5px] mb-6 px-0" />
+          
+          {/* Main Featured Article */}
+          <MainArticleSection />
+          
+          {/* Dynamic category sections */}
+          {categories?.map((category, index) => <div key={category.id}>
+              <CategorySectionGrid categorySlug={category.slug} limit={7} />
+              {/* Ad between every 2 sections */}
+              {index % 2 === 1 && <AdBanner size="leaderboard" className="my-8" />}
+            </div>)}
+        </div>
       </main>
       
       <Footer />

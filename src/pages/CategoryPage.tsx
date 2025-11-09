@@ -69,20 +69,21 @@ const CategoryPage = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container py-8">
-        {/* Mobile Category Navigation */}
-        <CategoryNav categories={categories} />
-        
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-news-category">
-            {slug === 'online' ? 'חדשות ברשת' : slug === 'recommended' ? 'מומלצים' : category?.name || slug}
-          </h1>
-          {category?.description && (
-            <p className="mt-2 text-muted-foreground">
-              {category.description}
-            </p>
-          )}
-        </div>
+      <main className="py-8">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
+          {/* Mobile Category Navigation */}
+          <CategoryNav categories={categories} />
+          
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-news-category">
+              {slug === 'online' ? 'חדשות ברשת' : slug === 'recommended' ? 'מומלצים' : category?.name || slug}
+            </h1>
+            {category?.description && (
+              <p className="mt-2 text-muted-foreground">
+                {category.description}
+              </p>
+            )}
+          </div>
         
         {isLoading ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -113,6 +114,7 @@ const CategoryPage = () => {
             <p className="text-muted-foreground">אין כתבות בקטגוריה זו</p>
           </div>
         )}
+        </div>
       </main>
       
       <Footer />

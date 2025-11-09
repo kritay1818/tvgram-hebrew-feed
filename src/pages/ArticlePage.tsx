@@ -81,8 +81,8 @@ const ArticlePage = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <article className="container py-8">
-        <div className="mx-auto max-w-4xl">
+      <article className="py-8">
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
           {/* Ad at the top */}
           <AdBanner size="leaderboard" className="mb-6" />
           
@@ -174,7 +174,7 @@ const ArticlePage = () => {
         </div>
         
         {relatedArticles && relatedArticles.length > 0 && (
-          <div className="container mt-12">
+          <div className="mx-auto mt-12 max-w-6xl px-4 md:px-6">
             <h2 className="mb-6 text-2xl font-bold">כתבות קשורות</h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {relatedArticles.map((related) => (
