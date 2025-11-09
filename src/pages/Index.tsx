@@ -50,7 +50,7 @@ const Index = () => {
       </div>
       
       <main className="w-full py-8 md:pl-56">
-        <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
           {/* Mobile Category Navigation */}
           <CategoryNav categories={categories} />
           

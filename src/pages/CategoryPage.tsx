@@ -70,7 +70,7 @@ const CategoryPage = () => {
       <Header />
       
       <main className="py-8">
-        <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
           {/* Mobile Category Navigation */}
           <CategoryNav categories={categories} />
           
