@@ -50,8 +50,8 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
   return (
     <section id={`category-${category.slug}`} className="mb-12 scroll-mt-20">
       <div className="mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
-        <div className="bg-news-live md:bg-transparent px-4 py-2 md:p-0 w-full md:w-auto flex justify-center md:justify-start">
-          <h2 className="text-xl md:text-2xl font-bold uppercase tracking-tight text-white md:text-foreground">
+        <div className="bg-news-live px-4 py-2 w-full md:w-auto flex justify-center md:justify-start">
+          <h2 className="text-xl md:text-2xl font-bold uppercase tracking-tight text-white">
             {category.name}
           </h2>
         </div>
