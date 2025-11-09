@@ -155,6 +155,41 @@ export type Database = {
         }
         Relationships: []
       }
+      short_urls: {
+        Row: {
+          article_id: string | null
+          click_count: number
+          created_at: string
+          full_url: string
+          id: string
+          short_code: string
+        }
+        Insert: {
+          article_id?: string | null
+          click_count?: number
+          created_at?: string
+          full_url: string
+          id?: string
+          short_code: string
+        }
+        Update: {
+          article_id?: string | null
+          click_count?: number
+          created_at?: string
+          full_url?: string
+          id?: string
+          short_code?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "short_urls_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       videos: {
         Row: {
           category: string | null

@@ -1,14 +1,47 @@
 import { Facebook, Twitter, Linkedin, Mail, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ShareButtonsProps {
   title: string;
   url?: string;
+  articleSlug?: string;
 }
 
-const ShareButtons = ({ title, url = window.location.href }: ShareButtonsProps) => {
-  const encodedUrl = encodeURIComponent(url);
+const ShareButtons = ({ title, url = window.location.href, articleSlug }: ShareButtonsProps) => {
+  const [shortUrl, setShortUrl] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  useEffect(() => {
+    if (articleSlug) {
+      generateShortUrl();
+    }
+  }, [articleSlug]);
+
+  const generateShortUrl = async () => {
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-short-url', {
+        body: { articleSlug },
+      });
+
+      if (error) throw error;
+      
+      if (data?.shortUrl) {
+        setShortUrl(data.shortUrl);
+      }
+    } catch (error) {
+      console.error('Error generating short URL:', error);
+      // Silently fall back to full URL
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const shareUrl = shortUrl || url;
+  const encodedUrl = encodeURIComponent(shareUrl);
   const encodedTitle = encodeURIComponent(title);
 
   const shareLinks = {
@@ -21,7 +54,7 @@ const ShareButtons = ({ title, url = window.location.href }: ShareButtonsProps) 
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(shareUrl);
       toast.success("הקישור הועתק ללוח");
     } catch (err) {
       toast.error("שגיאה בהעתקת הקישור");
@@ -33,6 +66,7 @@ const ShareButtons = ({ title, url = window.location.href }: ShareButtonsProps) 
       <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
         <Share2 className="h-5 w-5" />
         שתפו את הכתבה
+        {isGenerating && <span className="text-xs text-muted-foreground">(מייצר קישור קצר...)</span>}
       </h3>
       <div className="flex flex-wrap gap-3">
         <Button

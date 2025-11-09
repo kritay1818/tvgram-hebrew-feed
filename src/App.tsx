@@ -13,6 +13,7 @@ import LivePage from "./pages/LivePage";
 import VodPage from "./pages/VodPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Accessibility from "./pages/Accessibility";
+import ShortUrlRedirect from "./pages/ShortUrlRedirect";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/s/:shortCode" element={<ShortUrlRedirect />} />
             <Route path="/news/:slug" element={<ArticlePage />} />
             <Route path="/article/:slug" element={<ArticlePage />} />
             <Route path="/category/:slug" element={<CategoryPage />} />

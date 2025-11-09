@@ -170,7 +170,7 @@ const ArticlePage = () => {
           {/* Ad at the bottom */}
           <AdBanner size="leaderboard" className="my-8" />
           
-          <ShareButtons title={article.title} />
+          <ShareButtons title={article.title} articleSlug={article.slug} />
         </div>
         
         {relatedArticles && relatedArticles.length > 0 && (
