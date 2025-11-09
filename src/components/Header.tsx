@@ -71,7 +71,7 @@ const Header = () => {
       className={`rounded px-3 py-1.5 text-sm font-medium transition-colors whitespace-nowrap flex items-center ${
         isActive(path) 
           ? "bg-[#1a1a2e] text-white hover:opacity-90" 
-          : "text-foreground hover:text-primary"
+          : "text-white hover:opacity-80"
       }`}
     >
       {label}
@@ -102,7 +102,7 @@ const Header = () => {
             {moreCategories.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded px-3 py-1.5 text-sm font-medium transition-colors text-foreground hover:text-primary flex items-center gap-1 whitespace-nowrap h-[34px]">
+                  <button className="rounded px-3 py-1.5 text-sm font-medium transition-colors text-white hover:opacity-80 flex items-center gap-1 whitespace-nowrap h-[34px]">
                     עוד
                     <ChevronDown className="h-3 w-3" />
                   </button>
