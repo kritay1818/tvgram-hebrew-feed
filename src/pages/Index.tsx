@@ -7,6 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import MgidWidget from "@/components/MgidWidget";
+import MgidSidebarWidget from "@/components/MgidSidebarWidget";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
@@ -49,7 +50,12 @@ const Index = () => {
         <VideoSidebar />
       </div>
       
-      <main className="w-full py-8 md:pl-56">
+      {/* MGID Sidebar Widget - Between sidebar and content */}
+      <div className="hidden md:block fixed left-56 top-24 w-64 z-10">
+        <MgidSidebarWidget />
+      </div>
+      
+      <main className="w-full py-8 md:pl-56 md:pr-64">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
           {/* Mobile Category Navigation */}
           <CategoryNav categories={categories} />

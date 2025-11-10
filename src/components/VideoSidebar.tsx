@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import MgidSidebarWidget from "@/components/MgidSidebarWidget";
 
 const VideoSidebar = () => {
   const { data: liveVideos } = useQuery({
@@ -170,9 +169,6 @@ const VideoSidebar = () => {
                 </div>
               </Link>
             ))}
-            
-            {/* MGID Sidebar Widget */}
-            <MgidSidebarWidget />
           </div>
         </ScrollArea>
       </div>
