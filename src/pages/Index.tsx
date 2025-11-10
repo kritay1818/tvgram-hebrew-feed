@@ -6,7 +6,6 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
-import AdBanner from "@/components/AdBanner";
 import MgidWidget from "@/components/MgidWidget";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
@@ -58,17 +57,12 @@ const Index = () => {
           {/* Hero Featured Article */}
           <HeroSection />
           
-          {/* Ad after hero */}
-          <AdBanner size="leaderboard" className="mx-[5px] mb-6 px-0" />
-          
           {/* Main Featured Article */}
           <MainArticleSection />
           
           {/* Dynamic category sections */}
           {categories?.map((category, index) => <div key={category.id}>
               <CategorySectionGrid categorySlug={category.slug} limit={7} />
-              {/* Ad between every 2 sections */}
-              {index % 2 === 1 && <AdBanner size="leaderboard" className="my-8" />}
               {/* MGID Widget after every 3 sections */}
               {index % 3 === 2 && <MgidWidget />}
             </div>)}
