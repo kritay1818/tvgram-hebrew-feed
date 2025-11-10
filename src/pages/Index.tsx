@@ -44,18 +44,16 @@ const Index = () => {
       return data;
     }
   });
-  return <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background relative">
       <Header />
       <div className="hidden md:block">
         <VideoSidebar />
       </div>
       
-      {/* MGID Sidebar Widget - Between sidebar and content */}
-      <div className="hidden md:block fixed left-56 top-24 w-64 z-10">
-        <MgidSidebarWidget />
-      </div>
+      {/* MGID Sidebar Widget - Right side dead area */}
+      <MgidSidebarWidget />
       
-      <main className="w-full py-8 md:pl-56 md:pr-64">
+      <main className="w-full py-8 md:pl-56">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
           {/* Mobile Category Navigation */}
           <CategoryNav categories={categories} />
