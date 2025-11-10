@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import MgidWidget from "@/components/MgidWidget";
+import MgidInArticleWidget from "@/components/MgidInArticleWidget";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 
@@ -162,6 +163,9 @@ const ArticlePage = () => {
           )}
           
           <ShareButtons title={article.title} articleSlug={article.slug} />
+          
+          {/* MGID In-Article Widget */}
+          <MgidInArticleWidget />
           
           {/* MGID Widget */}
           <MgidWidget />
