@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import AdBanner from "@/components/AdBanner";
+import MgidWidget from "@/components/MgidWidget";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 
@@ -171,6 +172,9 @@ const ArticlePage = () => {
           <AdBanner size="leaderboard" className="my-8" />
           
           <ShareButtons title={article.title} articleSlug={article.slug} />
+          
+          {/* MGID Widget */}
+          <MgidWidget />
         </div>
         
         {relatedArticles && relatedArticles.length > 0 && (

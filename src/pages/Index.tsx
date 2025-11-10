@@ -7,6 +7,7 @@ import HeroSection from "@/components/HeroSection";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import AdBanner from "@/components/AdBanner";
+import MgidWidget from "@/components/MgidWidget";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
@@ -68,6 +69,8 @@ const Index = () => {
               <CategorySectionGrid categorySlug={category.slug} limit={7} />
               {/* Ad between every 2 sections */}
               {index % 2 === 1 && <AdBanner size="leaderboard" className="my-8" />}
+              {/* MGID Widget after every 3 sections */}
+              {index % 3 === 2 && <MgidWidget />}
             </div>)}
         </div>
       </main>
