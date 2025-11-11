@@ -24,7 +24,6 @@ const ArticlePage = () => {
   
   const [commentAuthor, setCommentAuthor] = useState("");
   const [commentContent, setCommentContent] = useState("");
-  const [localComments, setLocalComments] = useState<{ id: string; author_name: string | null; content: string; created_at: string }[]>([]);
   const [likeDelta, setLikeDelta] = useState(0);
   const [viewDelta, setViewDelta] = useState(0);
 
@@ -170,17 +169,6 @@ const ArticlePage = () => {
         });
     },
     onSuccess: async () => {
-      // Show the comment immediately for this user (local echo)
-      setLocalComments((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          author_name: commentAuthor.trim() || null,
-          content: commentContent.trim(),
-          created_at: new Date().toISOString(),
-        },
-      ]);
-
       toast({
         title: "תגובה נשלחה",
         description: "התגובה שלך פורסמה",
@@ -327,7 +315,7 @@ const ArticlePage = () => {
             
             <div className="flex items-center gap-2 text-muted-foreground">
               <MessageCircle size={18} />
-              <span>{(article.comments_count || 0) + localComments.length}</span>
+              <span>{article.comments_count || 0}</span>
             </div>
             
             <div className="flex items-center gap-2 text-muted-foreground">
@@ -365,9 +353,9 @@ const ArticlePage = () => {
             </div>
             
             {/* Comments List */}
-            {(comments && comments.length > 0) || localComments.length > 0 ? (
+            {comments && comments.length > 0 ? (
               <div className="space-y-4">
-                {(comments ? [...comments] : []).concat(localComments).map((comment) => (
+                {comments.map((comment) => (
                   <div key={comment.id} className="rounded-lg border border-border bg-card p-4">
                     <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="font-semibold">
