@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,9 +8,22 @@ import MgidWidget from "@/components/MgidWidget";
 import MgidInArticleWidget from "@/components/MgidInArticleWidget";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
+import { getAnonSessionId } from "@/lib/session";
+import { Heart, MessageCircle, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { useEffect, useState } from "react";
 
 const ArticlePage = () => {
   const { slug } = useParams();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const sessionId = getAnonSessionId();
+  
+  const [commentAuthor, setCommentAuthor] = useState("");
+  const [commentContent, setCommentContent] = useState("");
 
   const { data: article, isLoading } = useQuery({
     queryKey: ["article", slug],
@@ -27,8 +40,45 @@ const ArticlePage = () => {
         .maybeSingle();
       
       if (error) throw error;
+      return data as any;
+    },
+  });
+
+  // Check if user already liked this article
+  const { data: userLike } = useQuery({
+    queryKey: ["article-like", article?.id, sessionId],
+    queryFn: async () => {
+      if (!article?.id) return null;
+      
+      const { data } = await supabase
+        .from("article_likes" as any)
+        .select("id")
+        .eq("article_id", article.id)
+        .eq("session_id", sessionId)
+        .maybeSingle();
+      
       return data;
     },
+    enabled: !!article?.id,
+  });
+
+  // Fetch approved comments
+  const { data: comments } = useQuery({
+    queryKey: ["article-comments", article?.id],
+    queryFn: async () => {
+      if (!article?.id) return [];
+      
+      const { data, error } = await supabase
+        .from("article_comments" as any)
+        .select("id, author_name, content, created_at")
+        .eq("article_id", article.id)
+        .eq("status", "approved")
+        .order("created_at", { ascending: true });
+      
+      if (error) throw error;
+      return data as any[];
+    },
+    enabled: !!article?.id,
   });
 
   const { data: relatedArticles } = useQuery({
@@ -49,6 +99,80 @@ const ArticlePage = () => {
       return data;
     },
     enabled: !!article?.primary_category_id && !!article?.id,
+  });
+
+  // Track article view
+  useEffect(() => {
+    if (!article?.id) return;
+    
+    const trackView = async () => {
+      try {
+        await supabase
+          .from("article_views" as any)
+          .insert({ article_id: article.id, session_id: sessionId });
+      } catch (error) {
+        // Silently ignore duplicate view errors
+        console.log("View already tracked");
+      }
+    };
+    
+    trackView();
+  }, [article?.id, sessionId]);
+
+  // Like/Unlike mutation
+  const likeMutation = useMutation({
+    mutationFn: async () => {
+      if (!article?.id) return;
+      
+      if (userLike) {
+        // Unlike
+        await supabase
+          .from("article_likes" as any)
+          .delete()
+          .eq("article_id", article.id)
+          .eq("session_id", sessionId);
+      } else {
+        // Like
+        await supabase
+          .from("article_likes" as any)
+          .insert({ article_id: article.id, session_id: sessionId });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["article-like", article?.id, sessionId] });
+      queryClient.invalidateQueries({ queryKey: ["article", slug] });
+    },
+  });
+
+  // Comment submission mutation
+  const commentMutation = useMutation({
+    mutationFn: async () => {
+      if (!article?.id || !commentContent.trim()) return;
+      
+      await supabase
+        .from("article_comments" as any)
+        .insert({
+          article_id: article.id,
+          author_name: commentAuthor.trim() || null,
+          content: commentContent.trim(),
+          status: "pending",
+        });
+    },
+    onSuccess: () => {
+      toast({
+        title: "תגובה נשלחה",
+        description: "התגובה שלך נשלחה בהצלחה וממתינה לאישור",
+      });
+      setCommentAuthor("");
+      setCommentContent("");
+    },
+    onError: () => {
+      toast({
+        title: "שגיאה",
+        description: "אירעה שגיאה בשליחת התגובה. אנא נסה שנית",
+        variant: "destructive",
+      });
+    },
   });
 
   if (isLoading) {
@@ -161,6 +285,81 @@ const ArticlePage = () => {
               ))}
             </div>
           )}
+
+          {/* Engagement Stats & Like Button */}
+          <div className="mt-8 flex items-center gap-6 border-y border-border py-4">
+            <Button
+              variant={userLike ? "default" : "outline"}
+              size="sm"
+              onClick={() => likeMutation.mutate()}
+              disabled={likeMutation.isPending}
+              className="gap-2"
+            >
+              <Heart className={userLike ? "fill-current" : ""} size={18} />
+              <span>{article.likes_count || 0}</span>
+            </Button>
+            
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MessageCircle size={18} />
+              <span>{article.comments_count || 0}</span>
+            </div>
+            
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Eye size={18} />
+              <span>{article.views_count || 0}</span>
+            </div>
+          </div>
+
+          {/* Comments Section */}
+          <div className="mt-12">
+            <h2 className="mb-6 text-2xl font-bold">תגובות ({comments?.length || 0})</h2>
+            
+            {/* Comment Form */}
+            <div className="mb-8 rounded-lg border border-border bg-card p-6">
+              <h3 className="mb-4 text-lg font-semibold">הוסף תגובה</h3>
+              <div className="space-y-4">
+                <Input
+                  placeholder="שם (אופציונלי)"
+                  value={commentAuthor}
+                  onChange={(e) => setCommentAuthor(e.target.value)}
+                />
+                <Textarea
+                  placeholder="תוכן התגובה"
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
+                  rows={4}
+                />
+                <Button
+                  onClick={() => commentMutation.mutate()}
+                  disabled={!commentContent.trim() || commentMutation.isPending}
+                >
+                  {commentMutation.isPending ? "שולח..." : "שלח תגובה"}
+                </Button>
+              </div>
+            </div>
+            
+            {/* Comments List */}
+            {comments && comments.length > 0 ? (
+              <div className="space-y-4">
+                {comments.map((comment) => (
+                  <div key={comment.id} className="rounded-lg border border-border bg-card p-4">
+                    <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="font-semibold">
+                        {comment.author_name || "אנונימי"}
+                      </span>
+                      <span>•</span>
+                      <span>
+                        {format(new Date(comment.created_at), "d MMMM yyyy, HH:mm", { locale: he })}
+                      </span>
+                    </div>
+                    <p className="text-foreground">{comment.content}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-muted-foreground">אין תגובות עדיין. היה הראשון להגיב!</p>
+            )}
+          </div>
           
           <ShareButtons title={article.title} articleSlug={article.slug} />
           
