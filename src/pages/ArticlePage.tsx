@@ -75,7 +75,6 @@ const ArticlePage = () => {
         .from("article_comments" as any)
         .select("id, author_name, content, created_at")
         .eq("article_id", article.id)
-        .eq("status", "approved")
         .order("created_at", { ascending: true });
       
       if (error) throw error;
@@ -167,7 +166,7 @@ const ArticlePage = () => {
           article_id: article.id,
           author_name: commentAuthor.trim() || null,
           content: commentContent.trim(),
-          status: "pending",
+          status: "approved",
         });
     },
     onSuccess: async () => {

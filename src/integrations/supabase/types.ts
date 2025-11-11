@@ -44,10 +44,114 @@ export type Database = {
           },
         ]
       }
+      article_comments: {
+        Row: {
+          article_id: string
+          author_name: string | null
+          content: string
+          created_at: string | null
+          id: string
+          parent_id: string | null
+          status: string
+        }
+        Insert: {
+          article_id: string
+          author_name?: string | null
+          content: string
+          created_at?: string | null
+          id?: string
+          parent_id?: string | null
+          status?: string
+        }
+        Update: {
+          article_id?: string
+          author_name?: string | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          parent_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_comments_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "article_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "article_comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      article_likes: {
+        Row: {
+          article_id: string
+          created_at: string | null
+          id: string
+          session_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string | null
+          id?: string
+          session_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string | null
+          id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_likes_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      article_views: {
+        Row: {
+          article_id: string
+          created_at: string | null
+          id: string
+          session_id: string
+        }
+        Insert: {
+          article_id: string
+          created_at?: string | null
+          id?: string
+          session_id: string
+        }
+        Update: {
+          article_id?: string
+          created_at?: string | null
+          id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "article_views_article_id_fkey"
+            columns: ["article_id"]
+            isOneToOne: false
+            referencedRelation: "articles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       articles: {
         Row: {
           author: string | null
           body_html: string | null
+          comments_count: number | null
           content_type: string
           cover_url: string | null
           created_at: string | null
@@ -56,6 +160,7 @@ export type Database = {
           is_featured: boolean | null
           is_published: boolean | null
           is_top_story: boolean | null
+          likes_count: number | null
           primary_category_id: string | null
           published_at: string | null
           slug: string
@@ -65,10 +170,12 @@ export type Database = {
           title: string
           updated_at: string | null
           video_id: string | null
+          views_count: number | null
         }
         Insert: {
           author?: string | null
           body_html?: string | null
+          comments_count?: number | null
           content_type?: string
           cover_url?: string | null
           created_at?: string | null
@@ -77,6 +184,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           is_top_story?: boolean | null
+          likes_count?: number | null
           primary_category_id?: string | null
           published_at?: string | null
           slug: string
@@ -86,10 +194,12 @@ export type Database = {
           title: string
           updated_at?: string | null
           video_id?: string | null
+          views_count?: number | null
         }
         Update: {
           author?: string | null
           body_html?: string | null
+          comments_count?: number | null
           content_type?: string
           cover_url?: string | null
           created_at?: string | null
@@ -98,6 +208,7 @@ export type Database = {
           is_featured?: boolean | null
           is_published?: boolean | null
           is_top_story?: boolean | null
+          likes_count?: number | null
           primary_category_id?: string | null
           published_at?: string | null
           slug?: string
@@ -107,6 +218,7 @@ export type Database = {
           title?: string
           updated_at?: string | null
           video_id?: string | null
+          views_count?: number | null
         }
         Relationships: [
           {
@@ -154,6 +266,118 @@ export type Database = {
           slug?: string
         }
         Relationships: []
+      }
+      category_poll_options: {
+        Row: {
+          id: string
+          option_text: string
+          order_index: number | null
+          poll_id: string
+        }
+        Insert: {
+          id?: string
+          option_text: string
+          order_index?: number | null
+          poll_id: string
+        }
+        Update: {
+          id?: string
+          option_text?: string
+          order_index?: number | null
+          poll_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_poll_options_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "category_polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      category_poll_votes: {
+        Row: {
+          created_at: string | null
+          id: string
+          option_id: string
+          poll_id: string
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          option_id: string
+          poll_id: string
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          option_id?: string
+          poll_id?: string
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_poll_votes_option_id_fkey"
+            columns: ["option_id"]
+            isOneToOne: false
+            referencedRelation: "category_poll_options"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "category_polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      category_polls: {
+        Row: {
+          allow_multiple: boolean | null
+          category_id: string | null
+          created_at: string | null
+          description: string | null
+          ends_at: string | null
+          id: string
+          is_active: boolean | null
+          title: string
+        }
+        Insert: {
+          allow_multiple?: boolean | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          title: string
+        }
+        Update: {
+          allow_multiple?: boolean | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_polls_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       short_urls: {
         Row: {
