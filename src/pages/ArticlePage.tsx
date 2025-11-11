@@ -138,9 +138,9 @@ const ArticlePage = () => {
           .insert({ article_id: article.id, session_id: sessionId });
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["article-like", article?.id, sessionId] });
-      queryClient.invalidateQueries({ queryKey: ["article", slug] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["article-like", article?.id, sessionId] });
+      await queryClient.invalidateQueries({ queryKey: ["article", slug] });
     },
   });
 
@@ -155,16 +155,18 @@ const ArticlePage = () => {
           article_id: article.id,
           author_name: commentAuthor.trim() || null,
           content: commentContent.trim(),
-          status: "pending",
+          status: "approved",
         });
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "תגובה נשלחה",
-        description: "התגובה שלך נשלחה בהצלחה וממתינה לאישור",
+        description: "התגובה שלך פורסמה בהצלחה",
       });
       setCommentAuthor("");
       setCommentContent("");
+      await queryClient.invalidateQueries({ queryKey: ["article-comments", article?.id] });
+      await queryClient.invalidateQueries({ queryKey: ["article", slug] });
     },
     onError: () => {
       toast({

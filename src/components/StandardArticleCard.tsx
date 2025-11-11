@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { he } from "date-fns/locale";
+import { Heart, MessageCircle, Eye } from "lucide-react";
 
 interface StandardArticleCardProps {
   id: string;
@@ -11,6 +12,9 @@ interface StandardArticleCardProps {
   isLive?: boolean;
   publishedAt?: string;
   author?: string;
+  likesCount?: number;
+  commentsCount?: number;
+  viewsCount?: number;
 }
 
 const StandardArticleCard = ({
@@ -21,6 +25,9 @@ const StandardArticleCard = ({
   isLive,
   publishedAt,
   author,
+  likesCount = 0,
+  commentsCount = 0,
+  viewsCount = 0,
 }: StandardArticleCardProps) => {
   const timeAgo = publishedAt
     ? formatDistanceToNow(new Date(publishedAt), { addSuffix: true, locale: he })
@@ -67,6 +74,21 @@ const StandardArticleCard = ({
               {author && <span>{author}</span>}
             </div>
           )}
+          
+          <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <Heart size={14} />
+              {likesCount}
+            </span>
+            <span className="flex items-center gap-1">
+              <MessageCircle size={14} />
+              {commentsCount}
+            </span>
+            <span className="flex items-center gap-1">
+              <Eye size={14} />
+              {viewsCount}
+            </span>
+          </div>
         </div>
       </article>
     </Link>

@@ -75,6 +75,9 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
             isLive={article.videos?.is_live}
             publishedAt={article.published_at || undefined}
             author={article.author || undefined}
+            likesCount={(article as any).likes_count || 0}
+            commentsCount={(article as any).comments_count || 0}
+            viewsCount={(article as any).views_count || 0}
           />
         ))}
       </div>
