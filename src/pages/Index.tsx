@@ -8,6 +8,7 @@ import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import MgidWidget from "@/components/MgidWidget";
 import MgidSidebarWidget from "@/components/MgidSidebarWidget";
+import MgidMainWidget from "@/components/MgidMainWidget";
 import VideoSidebar from "@/components/VideoSidebar";
 import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
@@ -63,6 +64,9 @@ const Index = () => {
           
           {/* Main Featured Article */}
           <MainArticleSection />
+          
+          {/* MGID Main Widget */}
+          <MgidMainWidget />
           
           {/* Dynamic category sections */}
           {categories?.map((category, index) => <div key={category.id}>
