@@ -24,6 +24,9 @@ const ArticlePage = () => {
   
   const [commentAuthor, setCommentAuthor] = useState("");
   const [commentContent, setCommentContent] = useState("");
+  const [localComments, setLocalComments] = useState<{ id: string; author_name: string | null; content: string; created_at: string }[]>([]);
+  const [likeDelta, setLikeDelta] = useState(0);
+  const [viewDelta, setViewDelta] = useState(0);
 
   const { data: article, isLoading } = useQuery({
     queryKey: ["article", slug],
@@ -107,17 +110,21 @@ const ArticlePage = () => {
     
     const trackView = async () => {
       try {
-        await supabase
+        const { error } = await supabase
           .from("article_views" as any)
           .insert({ article_id: article.id, session_id: sessionId });
+        if (!error) {
+          setViewDelta(1);
+        }
       } catch (error) {
-        // Silently ignore duplicate view errors
         console.log("View already tracked");
+      } finally {
+        queryClient.invalidateQueries({ queryKey: ["article", slug] });
       }
     };
     
     trackView();
-  }, [article?.id, sessionId]);
+  }, [article?.id, sessionId, slug, queryClient]);
 
   // Like/Unlike mutation
   const likeMutation = useMutation({
@@ -139,8 +146,13 @@ const ArticlePage = () => {
       }
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["article-like", article?.id, sessionId] });
-      await queryClient.invalidateQueries({ queryKey: ["article", slug] });
+      setLikeDelta((d) => (userLike ? Math.max(0, d - 1) : d + 1));
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["article-like", article?.id, sessionId] }),
+        queryClient.invalidateQueries({ queryKey: ["article", slug] }),
+      ]);
+      // Reset local delta after refetch settles
+      setTimeout(() => setLikeDelta(0), 400);
     },
   });
 
@@ -155,18 +167,31 @@ const ArticlePage = () => {
           article_id: article.id,
           author_name: commentAuthor.trim() || null,
           content: commentContent.trim(),
-          status: "approved",
+          status: "pending",
         });
     },
     onSuccess: async () => {
+      // Show the comment immediately for this user (local echo)
+      setLocalComments((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          author_name: commentAuthor.trim() || null,
+          content: commentContent.trim(),
+          created_at: new Date().toISOString(),
+        },
+      ]);
+
       toast({
         title: "תגובה נשלחה",
-        description: "התגובה שלך פורסמה בהצלחה",
+        description: "התגובה שלך פורסמה",
       });
       setCommentAuthor("");
       setCommentContent("");
-      await queryClient.invalidateQueries({ queryKey: ["article-comments", article?.id] });
-      await queryClient.invalidateQueries({ queryKey: ["article", slug] });
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["article-comments", article?.id] }),
+        queryClient.invalidateQueries({ queryKey: ["article", slug] }),
+      ]);
     },
     onError: () => {
       toast({
@@ -298,17 +323,17 @@ const ArticlePage = () => {
               className="gap-2"
             >
               <Heart className={userLike ? "fill-current" : ""} size={18} />
-              <span>{article.likes_count || 0}</span>
+              <span>{(article.likes_count || 0) + likeDelta}</span>
             </Button>
             
             <div className="flex items-center gap-2 text-muted-foreground">
               <MessageCircle size={18} />
-              <span>{article.comments_count || 0}</span>
+              <span>{(article.comments_count || 0) + localComments.length}</span>
             </div>
             
             <div className="flex items-center gap-2 text-muted-foreground">
               <Eye size={18} />
-              <span>{article.views_count || 0}</span>
+              <span>{(article.views_count || 0) + viewDelta}</span>
             </div>
           </div>
 
@@ -341,9 +366,9 @@ const ArticlePage = () => {
             </div>
             
             {/* Comments List */}
-            {comments && comments.length > 0 ? (
+            {(comments && comments.length > 0) || localComments.length > 0 ? (
               <div className="space-y-4">
-                {comments.map((comment) => (
+                {(comments ? [...comments] : []).concat(localComments).map((comment) => (
                   <div key={comment.id} className="rounded-lg border border-border bg-card p-4">
                     <div className="mb-2 flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="font-semibold">
