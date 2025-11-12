@@ -282,7 +282,7 @@ const ArticlePage = () => {
           
           {article.body_html && (
             <div 
-              className="prose prose-lg max-w-none text-foreground dark:prose-invert [&_*]:text-foreground"
+              className="prose prose-lg max-w-none text-foreground dark:prose-invert [&_h1]:text-foreground [&_h2]:text-foreground [&_h3]:text-foreground [&_h4]:text-foreground [&_h5]:text-foreground [&_h6]:text-foreground [&_p]:text-foreground [&_li]:text-foreground [&_strong]:text-foreground [&_em]:text-foreground [&_span]:text-foreground"
               dangerouslySetInnerHTML={{ __html: article.body_html }}
             />
           )}
