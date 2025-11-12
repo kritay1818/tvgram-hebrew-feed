@@ -240,7 +240,7 @@ const ArticlePage = () => {
             </div>
           )}
           
-          <h1 className="mb-4 text-4xl font-bold leading-tight">
+          <h1 className="mb-4 text-4xl font-bold leading-tight text-foreground">
             {article.title}
           </h1>
           
@@ -282,7 +282,7 @@ const ArticlePage = () => {
           
           {article.body_html && (
             <div 
-              className="prose prose-lg max-w-none text-foreground dark:prose-invert"
+              className="prose prose-lg max-w-none text-foreground dark:prose-invert [&_*]:text-foreground"
               dangerouslySetInnerHTML={{ __html: article.body_html }}
             />
           )}
@@ -409,7 +409,7 @@ const ArticlePage = () => {
                     )}
                   </div>
                   <div className="p-4">
-                    <h3 className="line-clamp-2 font-bold group-hover:text-primary">
+                    <h3 className="line-clamp-2 font-bold text-foreground group-hover:text-primary">
                       {related.title}
                     </h3>
                     {related.published_at && (
