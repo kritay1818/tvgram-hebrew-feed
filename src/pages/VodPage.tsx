@@ -4,10 +4,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 
 const VodPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
   
   const categories = [
     { value: "מצחיק", label: "מצחיק" },
@@ -81,7 +83,11 @@ const VodPage = () => {
         ) : videos && videos.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {videos.map((video) => (
-              <Card key={video.id} className="overflow-hidden">
+              <Card 
+                key={video.id} 
+                className="overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => setSelectedVideo(video)}
+              >
                 <div className="relative aspect-video bg-black">
                   {video.thumb_url ? (
                     <img
@@ -116,6 +122,31 @@ const VodPage = () => {
         )}
         </div>
       </main>
+      
+      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>{selectedVideo?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="relative aspect-video bg-black">
+            {selectedVideo?.video_url ? (
+              <iframe
+                src={selectedVideo.video_url}
+                className="h-full w-full"
+                allowFullScreen
+                title={selectedVideo.title}
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <span className="text-4xl font-bold text-white/20">TVGRAM</span>
+              </div>
+            )}
+          </div>
+          {selectedVideo?.description && (
+            <p className="text-sm text-muted-foreground mt-4">{selectedVideo.description}</p>
+          )}
+        </DialogContent>
+      </Dialog>
       
       <Footer />
     </div>
