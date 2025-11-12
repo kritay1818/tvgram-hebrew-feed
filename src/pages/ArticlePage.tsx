@@ -282,7 +282,7 @@ const ArticlePage = () => {
           
           {article.body_html && (
             <div 
-              className="prose prose-lg max-w-none dark:prose-invert"
+              className="prose prose-lg max-w-none text-foreground dark:prose-invert"
               dangerouslySetInnerHTML={{ __html: article.body_html }}
             />
           )}
