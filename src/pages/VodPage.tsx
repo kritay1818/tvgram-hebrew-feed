@@ -11,6 +11,13 @@ const VodPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
   
+  // Extract src from iframe HTML or return URL as-is
+  const getVideoUrl = (videoUrl: string) => {
+    if (!videoUrl) return '';
+    const match = videoUrl.match(/src=["']([^"']+)["']/);
+    return match ? match[1] : videoUrl;
+  };
+  
   const categories = [
     { value: "מצחיק", label: "מצחיק" },
     { value: "אקטואלי", label: "אקטואלי" },
@@ -131,7 +138,7 @@ const VodPage = () => {
           <div className="relative aspect-video bg-black">
             {selectedVideo?.video_url ? (
               <iframe
-                src={selectedVideo.video_url}
+                src={getVideoUrl(selectedVideo.video_url)}
                 className="h-full w-full"
                 allowFullScreen
                 title={selectedVideo.title}

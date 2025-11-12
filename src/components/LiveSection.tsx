@@ -2,6 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 const LiveSection = () => {
+  // Extract src from iframe HTML or return URL as-is
+  const getVideoUrl = (videoUrl: string) => {
+    if (!videoUrl) return '';
+    const match = videoUrl.match(/src=["']([^"']+)["']/);
+    return match ? match[1] : videoUrl;
+  };
+  
   const { data: liveVideos } = useQuery({
     queryKey: ["live-videos"],
     queryFn: async () => {
@@ -31,7 +38,7 @@ const LiveSection = () => {
       <div className="relative aspect-video bg-black">
         {liveVideo.video_url ? (
           <iframe
-            src={liveVideo.video_url}
+            src={getVideoUrl(liveVideo.video_url)}
             className="h-full w-full"
             allowFullScreen
             title={liveVideo.title}
