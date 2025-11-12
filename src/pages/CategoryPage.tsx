@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
 import CategoryNav from "@/components/CategoryNav";
+import CategoryPoll from "@/components/CategoryPoll";
 
 const CategoryPage = () => {
   const { slug } = useParams();
@@ -84,6 +85,9 @@ const CategoryPage = () => {
               </p>
             )}
           </div>
+
+          {/* Category Poll */}
+          {category?.id && <CategoryPoll categoryId={category.id} />}
         
         {isLoading ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
