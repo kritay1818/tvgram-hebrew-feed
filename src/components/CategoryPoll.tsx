@@ -166,9 +166,6 @@ const CategoryPoll = ({ categoryId }: CategoryPollProps) => {
       {hasVoted ? (
         // Show results
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground mb-4">
-            סה"כ הצביעו: {totalVotes}
-          </p>
           {options.map((option) => {
             const votes = voteCounts?.[option.id] || 0;
             const percentage = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
@@ -188,7 +185,6 @@ const CategoryPoll = ({ categoryId }: CategoryPollProps) => {
                   </span>
                 </div>
                 <Progress value={percentage} className="h-2" />
-                <p className="text-xs text-muted-foreground">{votes} קולות</p>
               </div>
             );
           })}
