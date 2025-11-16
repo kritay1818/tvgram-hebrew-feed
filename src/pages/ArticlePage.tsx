@@ -307,7 +307,7 @@ const ArticlePage = () => {
               size="sm"
               onClick={() => likeMutation.mutate()}
               disabled={likeMutation.isPending}
-              className="gap-2"
+              className="gap-2 text-foreground"
             >
               <Heart className={userLike ? "fill-current" : ""} size={18} />
               <span>{(article.likes_count || 0) + likeDelta}</span>
