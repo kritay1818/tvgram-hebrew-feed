@@ -279,6 +279,30 @@ export type Database = {
         }
         Relationships: []
       }
+      categories_videos: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          order_index: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          order_index?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          order_index?: number | null
+        }
+        Relationships: []
+      }
       category_poll_options: {
         Row: {
           id: string
