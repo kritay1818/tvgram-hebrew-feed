@@ -47,6 +47,9 @@ const HeroSection = () => {
                 alt={featuredArticle.title}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="eager"
+                fetchPriority="high"
+                width="800"
+                height="500"
               />
             ) : (
               <div className="flex h-full items-center justify-center">
