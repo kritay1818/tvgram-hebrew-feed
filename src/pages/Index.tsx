@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import HomePoll from "@/components/HomePoll";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
 import MgidWidget from "@/components/MgidWidget";
@@ -61,6 +62,9 @@ const Index = () => {
           
           {/* Hero Featured Article */}
           <HeroSection />
+          
+          {/* Homepage Poll */}
+          <HomePoll />
           
           {/* Main Featured Article */}
           <MainArticleSection />
