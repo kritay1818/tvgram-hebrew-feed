@@ -33,7 +33,7 @@ const Index = () => {
     }
   }, [location]);
   // Single coordinated query for all homepage data
-  const { data: homepageData, isLoading } = useQuery({
+  const { data: homepageData, isLoading, error } = useQuery({
     queryKey: ["homepage-data"],
     queryFn: async () => {
       // Fetch categories
@@ -45,18 +45,18 @@ const Index = () => {
       
       if (categoriesError) throw categoriesError;
 
-      // Fetch hero article (top story)
-      const { data: heroArticle, error: heroError } = await supabase
+      // Fetch hero article (top story) - use maybeSingle to handle no results
+      const { data: heroArticle } = await supabase
         .from("articles")
         .select("*, categories(name, slug), videos(is_live)")
         .eq("is_published", true)
         .eq("is_top_story", true)
         .order("published_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
-      // Fetch main featured article
-      const { data: mainArticle, error: mainError } = await supabase
+      // Fetch main featured article - use maybeSingle to handle no results
+      const { data: mainArticle } = await supabase
         .from("articles")
         .select("*, categories(name, slug), videos(is_live)")
         .eq("is_published", true)
@@ -65,7 +65,7 @@ const Index = () => {
         .order("homepage_rank", { ascending: true, nullsFirst: false })
         .order("published_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
       // Fetch homepage poll
       const { data: homepagePoll } = await supabase
@@ -87,7 +87,7 @@ const Index = () => {
 
       // Fetch articles for all categories (3 per category)
       const categoryArticlesPromises = categories.map(async (category) => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("articles")
           .select("*, videos(is_live)")
           .eq("primary_category_id", category.id)
@@ -96,7 +96,6 @@ const Index = () => {
           .order("published_at", { ascending: false })
           .limit(3);
         
-        if (error) throw error;
         return { categoryId: category.id, articles: data || [] };
       });
 
@@ -106,16 +105,22 @@ const Index = () => {
       );
 
       return {
-        categories,
-        heroArticle,
-        mainArticle,
-        homepagePoll,
+        categories: categories || [],
+        heroArticle: heroArticle || null,
+        mainArticle: mainArticle || null,
+        homepagePoll: homepagePoll || null,
         articlesByCategory,
       };
     },
   });
-  if (isLoading || !homepageData) {
+  if (isLoading) {
     return <div className="min-h-screen bg-background" />;
+  }
+
+  if (!homepageData) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">
+      <p className="text-muted-foreground">No content available</p>
+    </div>;
   }
 
   const { categories, heroArticle, mainArticle, homepagePoll, articlesByCategory } = homepageData;
