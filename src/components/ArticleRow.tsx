@@ -18,9 +18,12 @@ const ArticleRow = ({ article }: ArticleRowProps) => {
       <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden bg-muted">
         {article.cover_url ? (
           <img
-            src={article.cover_url}
+            src={`${article.cover_url}${article.cover_url.includes('?') ? '&' : '?'}width=300&height=200&resize=cover`}
             alt={article.title}
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            loading="lazy"
+            width="300"
+            height="200"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

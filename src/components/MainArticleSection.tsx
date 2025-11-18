@@ -45,9 +45,13 @@ const MainArticleSection = () => {
             {/* Image Section */}
             <div className="relative aspect-video overflow-hidden bg-muted">
               <img
-                src={mainArticle.cover_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"}
+                src={`${mainArticle.cover_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"}${(mainArticle.cover_url || "").includes('?') ? '&' : '?'}width=600&height=400&resize=cover`}
                 alt={mainArticle.title}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                loading="eager"
+                fetchPriority="high"
+                width="600"
+                height="400"
               />
               {isLive && (
                 <div className="absolute top-3 left-3 bg-news-live px-3 py-1 text-xs font-bold text-white">

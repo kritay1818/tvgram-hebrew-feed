@@ -41,10 +41,12 @@ const LargeArticleCard = ({
         <div className="relative aspect-video overflow-hidden bg-muted">
           {coverUrl ? (
             <img
-              src={coverUrl}
+              src={`${coverUrl}${coverUrl.includes('?') ? '&' : '?'}width=600&height=400&resize=cover`}
               alt={title}
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
+              width="600"
+              height="400"
             />
           ) : (
             <div className="flex h-full items-center justify-center">

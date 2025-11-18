@@ -63,13 +63,16 @@ const VideoSidebar = () => {
           
           <Link to="/live" className="block">
             <div className="relative aspect-video bg-black">
-              {liveVideo.thumb_url ? (
-                <img
-                  src={liveVideo.thumb_url}
-                  alt={liveVideo.title}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
+                {liveVideo.thumb_url ? (
+                  <img
+                    src={`${liveVideo.thumb_url}${liveVideo.thumb_url.includes('?') ? '&' : '?'}width=300&height=200&resize=cover`}
+                    alt={liveVideo.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    width="300"
+                    height="200"
+                  />
+                ) : (
                 <div className="flex h-full items-center justify-center">
                   <span className="text-2xl font-bold text-white/20">LIVE</span>
                 </div>
@@ -101,9 +104,12 @@ const VideoSidebar = () => {
                   <div className="relative h-12 w-16 flex-shrink-0 overflow-hidden rounded bg-black">
                     {article.cover_url ? (
                       <img
-                        src={article.cover_url}
+                        src={`${article.cover_url}${article.cover_url.includes('?') ? '&' : '?'}width=100&height=80&resize=cover`}
                         alt={article.title}
                         className="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                        loading="lazy"
+                        width="100"
+                        height="80"
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center">
@@ -141,9 +147,12 @@ const VideoSidebar = () => {
                 <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded bg-black">
                   {video.thumb_url ? (
                     <img
-                      src={video.thumb_url}
+                      src={`${video.thumb_url}${video.thumb_url.includes('?') ? '&' : '?'}width=150&height=100&resize=cover`}
                       alt={video.title}
                       className="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                      loading="lazy"
+                      width="150"
+                      height="100"
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center">

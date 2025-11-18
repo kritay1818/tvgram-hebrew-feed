@@ -151,6 +151,8 @@ export type Database = {
         Row: {
           author: string | null
           body_html: string | null
+          bottom_likes: number | null
+          bottom_views: number
           comments_count: number | null
           content_type: string
           cover_url: string | null
@@ -168,6 +170,8 @@ export type Database = {
           summary: string | null
           tags: string[] | null
           title: string
+          top_likes: number
+          top_views: number | null
           updated_at: string | null
           video_id: string | null
           views_count: number | null
@@ -175,6 +179,8 @@ export type Database = {
         Insert: {
           author?: string | null
           body_html?: string | null
+          bottom_likes?: number | null
+          bottom_views?: number
           comments_count?: number | null
           content_type?: string
           cover_url?: string | null
@@ -192,6 +198,8 @@ export type Database = {
           summary?: string | null
           tags?: string[] | null
           title: string
+          top_likes?: number
+          top_views?: number | null
           updated_at?: string | null
           video_id?: string | null
           views_count?: number | null
@@ -199,6 +207,8 @@ export type Database = {
         Update: {
           author?: string | null
           body_html?: string | null
+          bottom_likes?: number | null
+          bottom_views?: number
           comments_count?: number | null
           content_type?: string
           cover_url?: string | null
@@ -216,6 +226,8 @@ export type Database = {
           summary?: string | null
           tags?: string[] | null
           title?: string
+          top_likes?: number
+          top_views?: number | null
           updated_at?: string | null
           video_id?: string | null
           views_count?: number | null

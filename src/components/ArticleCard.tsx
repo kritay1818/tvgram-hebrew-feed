@@ -26,9 +26,12 @@ const ArticleCard = ({
         <div className="relative aspect-video overflow-hidden bg-muted">
           {coverUrl ? (
             <img
-              src={coverUrl}
+              src={`${coverUrl}${coverUrl.includes('?') ? '&' : '?'}width=400&height=300&resize=cover`}
               alt={title}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
+              loading="lazy"
+              width="400"
+              height="300"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
