@@ -18,13 +18,19 @@ const VodPage = () => {
     return match ? match[1] : videoUrl;
   };
   
-  const categories = [
-    { value: "מצחיק", label: "מצחיק" },
-    { value: "אקטואלי", label: "אקטואלי" },
-    { value: "דרמתי", label: "דרמתי" },
-    { value: "חדשות", label: "חדשות" },
-    { value: "ספורט", label: "ספורט" },
-  ];
+  // Fetch categories from database
+  const { data: categories } = useQuery({
+    queryKey: ["video-categories"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("categories_videos")
+        .select("*")
+        .order("order_index", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
 
   const { data: videos, isLoading } = useQuery({
     queryKey: ["vod-videos", selectedCategory],
@@ -35,7 +41,7 @@ const VodPage = () => {
         .eq("is_live", false);
       
       if (selectedCategory) {
-        query = query.eq("category", selectedCategory);
+        query = query.eq("category_id", selectedCategory);
       }
       
       const { data, error } = await query.order("created_at", { ascending: false });
@@ -65,14 +71,14 @@ const VodPage = () => {
           >
             הכל
           </Button>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Button
-              key={category.value}
-              variant={selectedCategory === category.value ? "default" : "outline"}
+              key={category.id}
+              variant={selectedCategory === category.id ? "default" : "outline"}
               size="sm"
-              onClick={() => setSelectedCategory(category.value)}
+              onClick={() => setSelectedCategory(category.id)}
             >
-              {category.label}
+              {category.name}
             </Button>
           ))}
         </div>
