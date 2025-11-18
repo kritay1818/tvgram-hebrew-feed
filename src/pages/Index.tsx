@@ -70,7 +70,7 @@ const Index = () => {
           
           {/* Dynamic category sections */}
           {categories?.map((category, index) => <div key={category.id}>
-              <CategorySectionGrid categorySlug={category.slug} limit={7} />
+              <CategorySectionGrid categorySlug={category.slug} limit={3} />
               {/* MGID Widget after every 3 sections */}
               {index % 3 === 2 && <MgidWidget />}
             </div>)}
