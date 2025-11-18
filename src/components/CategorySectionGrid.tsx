@@ -25,10 +25,7 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
 
       const { data: articles, error } = await supabase
         .from("articles")
-        .select(`
-          *,
-          videos (is_live)
-        `)
+        .select("id, title, summary, cover_url, slug, published_at, author, likes_count, comments_count, views_count, videos(is_live)")
         .eq("primary_category_id", category.id)
         .eq("is_published", true)
         .order("homepage_rank", { ascending: true, nullsFirst: false })
