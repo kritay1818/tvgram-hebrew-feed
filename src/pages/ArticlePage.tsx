@@ -262,9 +262,13 @@ const ArticlePage = () => {
           {article.cover_url && (
             <div className="mb-8 overflow-hidden rounded-lg">
               <img
-                src={article.cover_url}
+                src={`${article.cover_url}${article.cover_url.includes('?') ? '&' : '?'}width=900&height=600&resize=cover`}
                 alt={article.title}
                 className="h-auto w-full max-h-[350px] object-cover"
+                loading="eager"
+                fetchPriority="high"
+                width="900"
+                height="600"
               />
             </div>
           )}
