@@ -1,33 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
-import { Eye } from "lucide-react";
 
-const MainArticleSection = () => {
-  const { data: mainArticle } = useQuery({
-    queryKey: ["main-article"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("articles")
-        .select(`
-          *,
-          categories:primary_category_id(name, slug),
-          videos(is_live)
-        `)
-        .eq("is_published", true)
-        .eq("is_featured", true)
-        .eq("is_top_story", false)
-        .order("homepage_rank", { ascending: true })
-        .order("published_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      
-      if (error) throw error;
-      return data;
-    },
-  });
+interface MainArticleSectionProps {
+  article: any;
+}
 
+const MainArticleSection = ({ article: mainArticle }: MainArticleSectionProps) => {
   if (!mainArticle) return null;
 
   const isLive = mainArticle.videos?.is_live;
@@ -48,8 +25,7 @@ const MainArticleSection = () => {
                 src={`${mainArticle.cover_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"}${(mainArticle.cover_url || "").includes('?') ? '&' : '?'}width=600&height=400&resize=cover`}
                 alt={mainArticle.title}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
                 width="600"
                 height="400"
               />

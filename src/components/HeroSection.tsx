@@ -1,34 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { he } from "date-fns/locale";
-import { Skeleton } from "@/components/ui/skeleton";
 
-const HeroSection = () => {
-  const { data: featuredArticle, isLoading } = useQuery({
-    queryKey: ["featured-article"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("articles")
-        .select(`
-          *,
-          categories:primary_category_id (name, slug),
-          videos (is_live)
-        `)
-        .eq("is_published", true)
-        .eq("is_top_story", true)
-        .order("published_at", { ascending: false })
-        .limit(1)
-        .single();
-      
-      if (error) throw error;
-      return data;
-    },
-  });
+interface HeroSectionProps {
+  article: any;
+}
 
-  if (isLoading) return null;
-
+const HeroSection = ({ article: featuredArticle }: HeroSectionProps) => {
   if (!featuredArticle) return null;
 
   const timeAgo = featuredArticle.published_at

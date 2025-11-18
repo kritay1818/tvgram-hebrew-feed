@@ -6,40 +6,26 @@ import { Progress } from "./ui/progress";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-const HomePoll = () => {
+interface HomePollProps {
+  poll: any;
+}
+
+const HomePoll = ({ poll }: HomePollProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const sessionId = getAnonSessionId();
-
-  // Fetch the most recent active poll for homepage (limit to 1)
-  const { data: poll } = useQuery({
-    queryKey: ["home-poll"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("category_polls")
-        .select("*")
-        .eq("is_active", true)
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
-      if (error) throw error;
-      
-      // Check if poll has ended
-      if (data && data.ends_at && new Date(data.ends_at) < new Date()) {
-        return null;
-      }
-      
-      return data;
-    },
-  });
 
   // Fetch poll options
   const { data: options } = useQuery({
     queryKey: ["poll-options", poll?.id],
     enabled: !!poll,
     queryFn: async () => {
+      // Use the pre-fetched options if available
+      if (poll?.category_poll_options) {
+        return poll.category_poll_options;
+      }
+      
       const { data, error } = await supabase
         .from("category_poll_options")
         .select("*")

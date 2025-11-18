@@ -1,51 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-import LargeArticleCard from "./LargeArticleCard";
 import StandardArticleCard from "./StandardArticleCard";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface CategorySectionGridProps {
-  categorySlug: string;
-  limit?: number;
+  category: any;
+  articles: any[];
 }
 
-const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridProps) => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["category-articles-grid", categorySlug, limit],
-    queryFn: async () => {
-      const { data: category } = await supabase
-        .from("categories")
-        .select("id, name, slug")
-        .eq("slug", categorySlug)
-        .single();
+const CategorySectionGrid = ({ category, articles }: CategorySectionGridProps) => {
+  const [showAll, setShowAll] = useState(false);
 
-      if (!category) return null;
+  if (!category || !articles || articles.length === 0) {
+    return null;
+  }
 
-      const { data: articles, error } = await supabase
-        .from("articles")
-        .select(`
-          *,
-          videos (is_live)
-        `)
-        .eq("primary_category_id", category.id)
-        .eq("is_published", true)
-        .order("homepage_rank", { ascending: true, nullsFirst: false })
-        .order("published_at", { ascending: false })
-        .limit(limit);
-      
-      if (error) throw error;
-      return { category, articles };
-    },
-  });
-
-  if (isLoading) return null;
-
-  if (!data || !data.articles || data.articles.length === 0) return null;
-
-  const { category, articles } = data;
-  const [firstArticle, ...restArticles] = articles;
+  const displayedArticles = showAll ? articles : articles.slice(0, 3);
+  const hasMore = articles.length > 3;
 
   return (
     <section id={`category-${category.slug}`} className="mb-12 scroll-mt-20">
@@ -63,8 +34,7 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
       </div>
       
       <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {/* All articles use StandardArticleCard for consistency */}
-        {articles.map((article) => (
+        {displayedArticles.map((article) => (
           <StandardArticleCard
             key={article.id}
             id={article.id}
@@ -81,6 +51,18 @@ const CategorySectionGrid = ({ categorySlug, limit = 7 }: CategorySectionGridPro
           />
         ))}
       </div>
+
+      {hasMore && !showAll && (
+        <div className="mt-4 text-center">
+          <Button
+            variant="outline"
+            onClick={() => setShowAll(true)}
+            className="w-full sm:w-auto"
+          >
+            הצג עוד כתבות ב{category.name}
+          </Button>
+        </div>
+      )}
     </section>
   );
 };
