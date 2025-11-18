@@ -22,7 +22,7 @@ const CategorySection = ({ categorySlug, categoryName, limit = 4 }: CategorySect
 
       const { data, error } = await supabase
         .from("articles")
-        .select("*")
+        .select("id, title, summary, cover_url, slug")
         .eq("primary_category_id", category.id)
         .eq("is_published", true)
         .order("published_at", { ascending: false })
