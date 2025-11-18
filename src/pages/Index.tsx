@@ -1,18 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import HomePoll from "@/components/HomePoll";
 import MainArticleSection from "@/components/MainArticleSection";
 import CategorySectionGrid from "@/components/CategorySectionGrid";
-import MgidWidget from "@/components/MgidWidget";
-import MgidSidebarWidget from "@/components/MgidSidebarWidget";
-import MgidMainWidget from "@/components/MgidMainWidget";
-import VideoSidebar from "@/components/VideoSidebar";
-import Footer from "@/components/Footer";
 import CategoryNav from "@/components/CategoryNav";
+
+// Lazy load non-critical components to reduce main-thread work
+const MgidWidget = lazy(() => import("@/components/MgidWidget"));
+const MgidSidebarWidget = lazy(() => import("@/components/MgidSidebarWidget"));
+const MgidMainWidget = lazy(() => import("@/components/MgidMainWidget"));
+const VideoSidebar = lazy(() => import("@/components/VideoSidebar"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const Index = () => {
   const location = useLocation();
@@ -48,12 +50,14 @@ const Index = () => {
   });
   return <div className="min-h-screen bg-background relative">
       <Header />
-      <div className="hidden md:block">
-        <VideoSidebar />
-      </div>
-      
-      {/* MGID Sidebar Widget - Right side dead area */}
-      <MgidSidebarWidget />
+      <Suspense fallback={<div />}>
+        <div className="hidden md:block">
+          <VideoSidebar />
+        </div>
+        
+        {/* MGID Sidebar Widget - Right side dead area */}
+        <MgidSidebarWidget />
+      </Suspense>
       
       <main className="w-full py-8 md:pl-56">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
@@ -70,18 +74,26 @@ const Index = () => {
           <MainArticleSection />
           
           {/* MGID Main Widget */}
-          <MgidMainWidget />
+          <Suspense fallback={<div className="my-8" />}>
+            <MgidMainWidget />
+          </Suspense>
           
           {/* Dynamic category sections */}
           {categories?.map((category, index) => <div key={category.id}>
               <CategorySectionGrid categorySlug={category.slug} limit={3} />
               {/* MGID Widget after every 3 sections */}
-              {index % 3 === 2 && <MgidWidget />}
+              {index % 3 === 2 && (
+                <Suspense fallback={<div className="my-8" />}>
+                  <MgidWidget />
+                </Suspense>
+              )}
             </div>)}
         </div>
       </main>
       
-      <Footer />
+      <Suspense fallback={<div />}>
+        <Footer />
+      </Suspense>
     </div>;
 };
 export default Index;
