@@ -140,8 +140,8 @@ const Index = () => {
           {categories?.map((category, index) => (
             <div key={category.id}>
               <LazyCategory category={category} index={index} />
-              {/* MGID Widget after every 4 sections, starting after index 3 */}
-              {index > 2 && (index + 1) % 4 === 0 && (
+              {/* MGID Widget after every 5 sections */}
+              {(index + 1) % 5 === 0 && (
                 <Suspense fallback={<div className="my-8" />}>
                   <MgidWidget />
                 </Suspense>
