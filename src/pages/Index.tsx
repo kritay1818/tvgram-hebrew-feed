@@ -48,7 +48,7 @@ const Index = () => {
       // Fetch hero article (top story)
       const { data: heroArticle, error: heroError } = await supabase
         .from("articles")
-        .select("*, categories(name, slug), videos(is_live)")
+        .select("*, categories!articles_primary_category_id_fkey(name, slug), videos(is_live)")
         .eq("is_published", true)
         .eq("is_top_story", true)
         .order("published_at", { ascending: false })
@@ -60,7 +60,7 @@ const Index = () => {
       // Fetch main featured article
       const { data: mainArticle, error: mainError } = await supabase
         .from("articles")
-        .select("*, categories(name, slug), videos(is_live)")
+        .select("*, categories!articles_primary_category_id_fkey(name, slug), videos(is_live)")
         .eq("is_published", true)
         .eq("is_featured", true)
         .eq("is_top_story", false)
