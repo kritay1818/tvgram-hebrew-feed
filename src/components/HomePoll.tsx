@@ -12,15 +12,16 @@ const HomePoll = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const sessionId = getAnonSessionId();
 
-  // Fetch active poll with no category (homepage poll)
+  // Fetch the most recent active poll for homepage (limit to 1)
   const { data: poll } = useQuery({
     queryKey: ["home-poll"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("category_polls")
         .select("*")
-        .is("category_id", null)
         .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1)
         .maybeSingle();
 
       if (error) throw error;
