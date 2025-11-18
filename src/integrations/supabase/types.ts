@@ -452,7 +452,7 @@ export type Database = {
       }
       videos: {
         Row: {
-          category: string | null
+          category_id: string | null
           created_at: string | null
           description: string | null
           duration_seconds: number | null
@@ -472,7 +472,7 @@ export type Database = {
           viewer_count: number | null
         }
         Insert: {
-          category?: string | null
+          category_id?: string | null
           created_at?: string | null
           description?: string | null
           duration_seconds?: number | null
@@ -492,7 +492,7 @@ export type Database = {
           viewer_count?: number | null
         }
         Update: {
-          category?: string | null
+          category_id?: string | null
           created_at?: string | null
           description?: string | null
           duration_seconds?: number | null
@@ -511,7 +511,15 @@ export type Database = {
           video_url?: string | null
           viewer_count?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "videos_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories_videos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
