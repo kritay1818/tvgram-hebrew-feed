@@ -32,22 +32,94 @@ const Index = () => {
       }, 100);
     }
   }, [location]);
-  // Fetch all categories in navigation order
-  const {
-    data: categories
-  } = useQuery({
-    queryKey: ["nav-categories"],
+  // Single coordinated query for all homepage data
+  const { data: homepageData, isLoading } = useQuery({
+    queryKey: ["homepage-data"],
     queryFn: async () => {
-      const {
-        data,
-        error
-      } = await supabase.from("categories").select("*").eq("is_in_nav", true).order("order_index", {
-        ascending: true
+      // Fetch categories
+      const { data: categories, error: categoriesError } = await supabase
+        .from("categories")
+        .select("*")
+        .eq("is_in_nav", true)
+        .order("order_index", { ascending: true });
+      
+      if (categoriesError) throw categoriesError;
+
+      // Fetch hero article (top story)
+      const { data: heroArticle, error: heroError } = await supabase
+        .from("articles")
+        .select("*, categories(name, slug), videos(is_live)")
+        .eq("is_published", true)
+        .eq("is_top_story", true)
+        .order("published_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      // Fetch main featured article
+      const { data: mainArticle, error: mainError } = await supabase
+        .from("articles")
+        .select("*, categories(name, slug), videos(is_live)")
+        .eq("is_published", true)
+        .eq("is_featured", true)
+        .eq("is_top_story", false)
+        .order("homepage_rank", { ascending: true, nullsFirst: false })
+        .order("published_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      // Fetch homepage poll
+      const { data: homepagePoll } = await supabase
+        .from("category_polls")
+        .select(`
+          *,
+          category_poll_options (
+            id,
+            option_text,
+            order_index
+          )
+        `)
+        .is("category_id", null)
+        .eq("is_active", true)
+        .gt("ends_at", new Date().toISOString())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      // Fetch articles for all categories (3 per category)
+      const categoryArticlesPromises = categories.map(async (category) => {
+        const { data, error } = await supabase
+          .from("articles")
+          .select("*, videos(is_live)")
+          .eq("primary_category_id", category.id)
+          .eq("is_published", true)
+          .order("homepage_rank", { ascending: true, nullsFirst: false })
+          .order("published_at", { ascending: false })
+          .limit(3);
+        
+        if (error) throw error;
+        return { categoryId: category.id, articles: data || [] };
       });
-      if (error) throw error;
-      return data;
-    }
+
+      const categoryArticles = await Promise.all(categoryArticlesPromises);
+      const articlesByCategory = Object.fromEntries(
+        categoryArticles.map(({ categoryId, articles }) => [categoryId, articles])
+      );
+
+      return {
+        categories,
+        heroArticle,
+        mainArticle,
+        homepagePoll,
+        articlesByCategory,
+      };
+    },
   });
+  if (isLoading || !homepageData) {
+    return <div className="min-h-screen bg-background" />;
+  }
+
+  const { categories, heroArticle, mainArticle, homepagePoll, articlesByCategory } = homepageData;
+
   return <div className="min-h-screen bg-background relative">
       <Header />
       <Suspense fallback={<div />}>
@@ -65,13 +137,13 @@ const Index = () => {
           <CategoryNav categories={categories} />
           
           {/* Hero Featured Article */}
-          <HeroSection />
+          {heroArticle && <HeroSection article={heroArticle} />}
           
           {/* Homepage Poll */}
-          <HomePoll />
+          {homepagePoll && <HomePoll poll={homepagePoll} />}
           
           {/* Main Featured Article */}
-          <MainArticleSection />
+          {mainArticle && <MainArticleSection article={mainArticle} />}
           
           {/* MGID Main Widget */}
           <Suspense fallback={<div className="my-8" />}>
@@ -80,7 +152,10 @@ const Index = () => {
           
           {/* Dynamic category sections */}
           {categories?.map((category, index) => <div key={category.id}>
-              <CategorySectionGrid categorySlug={category.slug} limit={3} />
+              <CategorySectionGrid 
+                category={category} 
+                articles={articlesByCategory[category.id] || []}
+              />
               {/* MGID Widget after every 3 sections */}
               {index % 3 === 2 && (
                 <Suspense fallback={<div className="my-8" />}>
