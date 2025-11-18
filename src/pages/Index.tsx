@@ -36,8 +36,6 @@ const Index = () => {
   const { data: homepageData, isLoading, error } = useQuery({
     queryKey: ["homepage-data"],
     queryFn: async () => {
-      console.log("Starting homepage data fetch...");
-      
       // Fetch categories
       const { data: categories, error: categoriesError } = await supabase
         .from("categories")
@@ -45,12 +43,10 @@ const Index = () => {
         .eq("is_in_nav", true)
         .order("order_index", { ascending: true });
       
-      console.log("Categories fetched:", categories, "Error:", categoriesError);
-      
       if (categoriesError) throw categoriesError;
 
-      // Fetch hero article (top story) - use maybeSingle to handle no results
-      const { data: heroArticle } = await supabase
+      // Fetch hero article (top story)
+      const { data: heroArticle, error: heroError } = await supabase
         .from("articles")
         .select("*, categories(name, slug), videos(is_live)")
         .eq("is_published", true)
@@ -59,10 +55,10 @@ const Index = () => {
         .limit(1)
         .maybeSingle();
 
-      console.log("Hero article:", heroArticle);
+      if (heroError) console.error("Hero article error:", heroError);
 
-      // Fetch main featured article - use maybeSingle to handle no results
-      const { data: mainArticle } = await supabase
+      // Fetch main featured article
+      const { data: mainArticle, error: mainError } = await supabase
         .from("articles")
         .select("*, categories(name, slug), videos(is_live)")
         .eq("is_published", true)
@@ -73,7 +69,7 @@ const Index = () => {
         .limit(1)
         .maybeSingle();
 
-      console.log("Main article:", mainArticle);
+      if (mainError) console.error("Main article error:", mainError);
 
       // Fetch homepage poll
       const { data: homepagePoll } = await supabase
@@ -92,8 +88,6 @@ const Index = () => {
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
-
-      console.log("Poll:", homepagePoll);
 
       // Fetch articles for all categories (3 per category)
       const categoryArticlesPromises = categories.map(async (category) => {
@@ -114,8 +108,6 @@ const Index = () => {
         categoryArticles.map(({ categoryId, articles }) => [categoryId, articles])
       );
 
-      console.log("Articles by category:", articlesByCategory);
-
       return {
         categories: categories || [],
         heroArticle: heroArticle || null,
@@ -127,8 +119,6 @@ const Index = () => {
   });
 
   console.log("Query state - isLoading:", isLoading, "error:", error, "data:", homepageData);
-  console.log("Query state - isLoading:", isLoading, "error:", error, "data:", homepageData);
-
   if (error) {
     console.error("Homepage query error:", error);
     return <div className="min-h-screen bg-background flex items-center justify-center">
