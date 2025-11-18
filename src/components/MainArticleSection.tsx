@@ -10,11 +10,7 @@ const MainArticleSection = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("articles")
-        .select(`
-          *,
-          categories:primary_category_id(name, slug),
-          videos(is_live)
-        `)
+        .select("id, title, summary, cover_url, slug, categories:primary_category_id(name, slug), videos(is_live)")
         .eq("is_published", true)
         .eq("is_featured", true)
         .eq("is_top_story", false)
