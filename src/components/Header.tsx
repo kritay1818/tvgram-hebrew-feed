@@ -81,7 +81,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-[100] w-full border-b bg-header shadow-sm">
       <div className="container h-16">
-        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-3">
+        <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-start h-full gap-3 py-1">
           {/* Left - Navigation Items */}
           <div className="flex items-center gap-2 justify-start overflow-hidden">
             {navItems.slice(0, 7).map((item) => (
