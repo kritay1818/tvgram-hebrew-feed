@@ -83,7 +83,7 @@ const Header = () => {
       <div className="container h-16">
         <div className="hidden lg:grid lg:grid-cols-[1fr_auto_1fr] items-center h-full gap-3">
           {/* Left - Navigation Items */}
-          <div className="flex items-center gap-2 justify-start flex-wrap">
+          <div className="flex items-center gap-2 justify-start overflow-hidden">
             {navItems.slice(0, 7).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
@@ -95,7 +95,7 @@ const Header = () => {
           </Link>
           
           {/* Right - nav items + More dropdown + LIVE button + Theme toggle */}
-          <div className="flex items-center gap-2 justify-end flex-wrap">
+          <div className="flex items-center gap-2 justify-end overflow-hidden">
             {navItems.slice(7).map((item) => (
               <NavLink key={item.path} path={item.path} label={item.label} />
             ))}
