@@ -151,26 +151,38 @@ const Header = () => {
                 <Menu className="h-6 w-6" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] bg-background z-[110]">
-              <nav className="flex flex-col gap-4 mt-8">
+            <SheetContent side="right" className="w-[280px] bg-background z-[110] overflow-y-auto">
+              <nav className="flex flex-col gap-4 mt-8 pb-8">
                 {navItems.map((item) => (
-                  <NavLink 
+                  <Link 
                     key={item.path} 
-                    path={item.path} 
-                    label={item.label}
+                    to={item.path}
                     onClick={() => setIsOpen(false)}
-                  />
+                    className={`rounded px-3 py-2 text-sm font-medium transition-colors ${
+                      isActive(item.path) 
+                        ? "bg-primary text-primary-foreground" 
+                        : "text-foreground hover:bg-muted"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
                 ))}
                 {moreCategories.length > 0 && (
                   <>
-                    <div className="text-xs font-bold text-muted-foreground px-2">עוד</div>
+                    <div className="text-xs font-bold text-muted-foreground px-2 mt-2">עוד</div>
                     {moreCategories.map((cat) => (
-                      <NavLink
+                      <Link
                         key={cat.id}
-                        path={`/category/${cat.slug}`}
-                        label={cat.name}
+                        to={`/category/${cat.slug}`}
                         onClick={() => setIsOpen(false)}
-                      />
+                        className={`rounded px-3 py-2 text-sm font-medium transition-colors ${
+                          isActive(`/category/${cat.slug}`) 
+                            ? "bg-primary text-primary-foreground" 
+                            : "text-foreground hover:bg-muted"
+                        }`}
+                      >
+                        {cat.name}
+                      </Link>
                     ))}
                   </>
                 )}
@@ -178,7 +190,7 @@ const Header = () => {
                   <Link 
                     to="/live"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-1.5 rounded bg-news-live px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 w-fit"
+                    className="flex items-center gap-1.5 rounded bg-news-live px-3 py-2 text-xs font-bold text-white hover:opacity-90 w-fit"
                   >
                     <span className="inline-block h-1.5 w-1.5 rounded-full bg-white"></span>
                     LIVE
