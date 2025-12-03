@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import MgidWidget from "@/components/MgidWidget";
 import MgidInArticleWidget from "@/components/MgidInArticleWidget";
+import MgidMainWidget from "@/components/MgidMainWidget";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 import { getAnonSessionId } from "@/lib/session";
@@ -431,7 +432,7 @@ const ArticlePage = () => {
       
       {/* MGID Widget at bottom of page */}
       <div className="mx-auto max-w-4xl px-4 md:px-6">
-        <MgidWidget />
+        <MgidMainWidget />
       </div>
       
       <Footer />
