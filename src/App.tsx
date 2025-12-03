@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import AccessibilityMenu from "@/components/AccessibilityMenu";
+import { Analytics } from "@vercel/analytics/react";
 import { lazy, Suspense } from "react";
 
 // Lazy load page components for better performance
@@ -27,6 +28,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <AccessibilityMenu />
+        <Analytics />
         <BrowserRouter>
           <Suspense fallback={<div className="min-h-screen bg-background" />}>
             <Routes>
