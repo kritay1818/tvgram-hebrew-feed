@@ -429,6 +429,11 @@ const ArticlePage = () => {
         )}
       </article>
       
+      {/* MGID Widget at bottom of page */}
+      <div className="mx-auto max-w-4xl px-4 md:px-6">
+        <MgidWidget />
+      </div>
+      
       <Footer />
     </div>
   );
