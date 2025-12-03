@@ -151,9 +151,11 @@ const Index = () => {
         </div>
         
         {/* MGID Widget at bottom */}
-        <Suspense fallback={<div className="my-8" />}>
-          <MgidMainWidget />
-        </Suspense>
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
+          <Suspense fallback={<div className="my-8" />}>
+            <MgidMainWidget />
+          </Suspense>
+        </div>
       </main>
       
       <Suspense fallback={<div />}>
