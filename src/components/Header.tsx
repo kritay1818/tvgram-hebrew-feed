@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.png";
 import { Menu, Moon, Sun, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import {
   Sheet,
@@ -21,7 +21,12 @@ import {
 const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const { data: hasLive } = useQuery({
     queryKey: ["has-live-videos"],
@@ -130,16 +135,18 @@ const Header = () => {
                 LIVE
               </Link>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-[34px] w-[34px] text-white hover:bg-white/10"
-            >
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                className="h-[34px] w-[34px] text-white hover:bg-white/10"
+              >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -214,16 +221,18 @@ const Header = () => {
                 LIVE
               </Link>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="h-9 w-9 text-white hover:bg-white/10"
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                className="h-9 w-9 text-white hover:bg-white/10"
+              >
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
