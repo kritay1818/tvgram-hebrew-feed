@@ -10,7 +10,7 @@ const MgidSidebarWidget = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="fixed right-4 top-24 w-[300px] hidden xl:block z-10">
+    <div ref={containerRef} className="fixed right-4 top-24 w-[300px] hidden 2xl:block z-10">
       <div data-type="_mgwidget" data-widget-id="1886921"></div>
       <script
         dangerouslySetInnerHTML={{
