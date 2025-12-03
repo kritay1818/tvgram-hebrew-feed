@@ -152,7 +152,7 @@ const Index = () => {
         
         {/* MGID Widget at bottom */}
         <Suspense fallback={<div className="my-8" />}>
-          <MgidWidget />
+          <MgidMainWidget />
         </Suspense>
       </main>
       
