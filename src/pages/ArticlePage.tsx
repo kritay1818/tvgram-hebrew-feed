@@ -7,6 +7,7 @@ import ShareButtons from "@/components/ShareButtons";
 import MgidWidget from "@/components/MgidWidget";
 import MgidMainWidget from "@/components/MgidMainWidget";
 import MgidSidebarWidget from "@/components/MgidSidebarWidget";
+import VideoSidebar from "@/components/VideoSidebar";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 import { getAnonSessionId } from "@/lib/session";
@@ -218,11 +219,14 @@ const ArticlePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
       <MgidSidebarWidget />
+      <div className="hidden md:block">
+        <VideoSidebar />
+      </div>
       <Header />
       
-      <article className="py-8">
+      <article className="py-8 md:pl-56">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
           {article.primary_category && (
             <nav className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
