@@ -5,8 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import MgidWidget from "@/components/MgidWidget";
-import MgidInArticleWidget from "@/components/MgidInArticleWidget";
 import MgidMainWidget from "@/components/MgidMainWidget";
+import MgidSidebarWidget from "@/components/MgidSidebarWidget";
 import { format } from "date-fns";
 import { he } from "date-fns/locale";
 import { getAnonSessionId } from "@/lib/session";
@@ -219,6 +219,7 @@ const ArticlePage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <MgidSidebarWidget />
       <Header />
       
       <article className="py-8">
@@ -382,8 +383,6 @@ const ArticlePage = () => {
           
           <ShareButtons title={article.title} articleSlug={article.slug} />
           
-          {/* MGID In-Article Widget */}
-          <MgidInArticleWidget />
           
           {/* MGID Widget */}
           <MgidWidget />
